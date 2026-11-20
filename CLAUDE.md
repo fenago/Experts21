@@ -8,6 +8,7 @@ This project is a team of AI expert agents advising a consultant, working for Dr
 |---|---|
 | `docs/` | Research pack (Nov 2026): market, customers, competitors, costs, permits, staffing, marketing, risks, sources. Start at `docs/README.md` |
 | `docs/expert-roster.md` | Every agent, its job, and which skills it uses |
+| `docs/how-to-talk-to-your-experts.md` | Example prompts for one expert or the whole team |
 | `docs/decision-log.md` | Decisions made and pending. Check before advising; don't reopen settled decisions without new evidence |
 | `.claude/agents/` | 26 project subagents (24 experts + orchestrator + agent builder) |
 | `.claude/skills/` | 42 project skills (4 core + 38 specialist), preloaded into agents via each agent's `skills:` list |

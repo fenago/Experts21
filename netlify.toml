@@ -1,0 +1,20 @@
+# Netlify builds the Experts web app in web/ with no extra settings.
+# The only thing to add in Netlify is the ANTHROPIC_API_KEY environment variable (see web/README.md).
+
+[build]
+  base = "web"                         # run the build inside web/ (the rest of the repo is still available)
+  command = "npm run build"            # reads ../.claude, ../knowledge, ../docs, then builds the React app
+  publish = "dist"                     # relative to base: web/dist
+
+[build.environment]
+  NODE_VERSION = "22"
+
+[functions]
+  directory = "netlify/functions"      # relative to base: web/netlify/functions
+  node_bundler = "esbuild"
+
+# Don't cache API responses at the edge.
+[[headers]]
+  for = "/api/*"
+  [headers.values]
+    Cache-Control = "no-store"

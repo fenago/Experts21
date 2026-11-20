@@ -1,0 +1,30 @@
+{
+  "name": "experts-web",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Chat with the Miami coffee shop expert team; Claude API calls run in Netlify Functions",
+  "scripts": {
+    "team": "node scripts/build-team.mjs",
+    "dev": "npm run team && vite",
+    "build": "npm run team && vite build",
+    "preview": "vite preview",
+    "test": "npm run build && node scripts/test-functions.mjs"
+  },
+  "engines": {
+    "node": ">=20.19"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^1.11.0",
+    "react": "^19.3.1",
+    "react-dom": "^19.3.1",
+    "react-markdown": "^10.1.0",
+    "remark-gfm": "^4.0.1",
+    "zod": "^4.6.7"
+  },
+  "devDependencies": {
+    "@vitejs/plugin-react": "^6.3.0",
+    "gray-matter": "^4.0.3",
+    "vite": "^8.3.8"
+  }
+}

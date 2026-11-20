@@ -16,6 +16,7 @@ This project is a team of AI expert agents advising a consultant, working for Dr
 | `.claude/skills/` | 42 project skills (4 core + 38 specialist), preloaded into agents via each agent's `skills:` list |
 | `deliverables/` | Agent outputs (models, plans, checklists) saved by topic |
 | `scripts/validate_team.py` | Checks agents and skills are valid and wired correctly |
+| `web/`, `netlify.toml` | React chat app for the team (sidebar, per-expert chat, "Ask the whole team"); Claude calls run in Netlify Functions. See `web/README.md` |
 | `sdk/` | Node.js script that runs Victor (real-estate-advisor) with the Claude Agent SDK; see `sdk/README.md` |
 | `scripts/export_agent_skill.py`, `exports/` | Package an agent as a standalone Claude skill (.zip) for upload to a Claude account |
 

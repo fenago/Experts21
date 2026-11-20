@@ -1,6 +1,6 @@
 # Expert Roster — Miami Specialty Coffee Shop
 
-*Built November 2026 from the research in this folder (see [README.md](README.md)). Every role below is a Claude Code project subagent in `.claude/agents/`, and every skill is a project skill in `.claude/skills/<skill-name>/SKILL.md`. See [CLAUDE.md](../CLAUDE.md) for how to use the team.*
+*Built November 2026 from the research in this folder (see [README.md](README.md)). Every role below is a Claude Code project subagent in `.claude/agents/`, and every skill is a project skill in `.claude/skills/<skill-name>/SKILL.md`. See [CLAUDE.md](../CLAUDE.md) for how to use the team. Each agent's model and personality are in [agent-brains.md](agent-brains.md); each agent's documents are in `knowledge/<agent-name>/`.*
 
 **Totals:** 26 agents (24 experts + orchestrator + agent builder), 4 core skills, 38 specialist skills.
 

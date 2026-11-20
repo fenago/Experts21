@@ -119,6 +119,17 @@ for f in sorted(os.listdir(AGENTS_DIR)):
             used[s].append(name)
     if not body.strip():
         warnings.append(f"agent {name}: empty system prompt")
+    model = str(fm.get("model", ""))
+    if not model:
+        errors.append(f"agent {name}: no model set (use opus, sonnet, or haiku; see docs/agent-brains.md)")
+    elif model not in ("opus", "sonnet", "haiku", "fable", "inherit") and not model.startswith("claude-"):
+        errors.append(f"agent {name}: unknown model '{model}'")
+    if not os.path.isfile(os.path.join(ROOT, "knowledge", name, "README.md")):
+        errors.append(f"agent {name}: missing knowledge/{name}/README.md")
+    if f"knowledge/{name}/" not in body:
+        warnings.append(f"agent {name}: prompt doesn't tell it to read knowledge/{name}/")
+    if "## Who you are" not in body:
+        warnings.append(f"agent {name}: no personality section ('## Who you are')")
 
 experts = [n for n in agents if n not in ("orchestrator", "agent-builder")]
 for n in experts:
@@ -138,6 +149,13 @@ if not 10 <= len(agents) <= 50:
     errors.append(f"team has {len(agents)} agents; target is 10–50")
 if desc_chars > 40000:  # rough proxy for the ~15,000-token description budget
     warnings.append(f"agent descriptions total {desc_chars} characters; approaching the 15,000-token limit")
+
+BRAINS = os.path.join(ROOT, "docs", "agent-brains.md")
+if os.path.isfile(BRAINS):
+    brains = open(BRAINS, encoding="utf-8").read()
+    for n in agents:
+        if f"`{n}`" not in brains:
+            warnings.append(f"agent {n}: not listed in docs/agent-brains.md")
 
 if os.path.isfile(ROSTER):
     roster = open(ROSTER, encoding="utf-8").read()

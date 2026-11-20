@@ -127,7 +127,18 @@ Experts stay in their own area. If your question touches another area, they add 
 
 ---
 
-## 4. Other useful commands
+## 4. Give an expert your documents
+
+Each agent has a folder, `knowledge/<agent-name>/`, that it reads before every answer. Drop in quotes, contracts, notes, or data exports, then ask as usual:
+
+```
+I put the landlord's LOI in knowledge/real-estate-advisor/. @agent-real-estate-advisor
+Review it and tell me what to push back on.
+```
+
+Every agent also has a first name (Victor in real estate, Eleanor the attorney, Daniel in finance, Elena the orchestrator…). Names are listed in [agent-brains.md](agent-brains.md); to call an agent, still use its agent name, e.g. `@agent-real-estate-advisor`.
+
+## 5. Other useful commands
 
 | What you want | Type |
 |---|---|

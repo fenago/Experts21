@@ -20,6 +20,7 @@
 | 10 | [10-sources.md](10-sources.md) | Source list and confidence notes | All agents |
 | — | [expert-roster.md](expert-roster.md) | The 26 agents (24 experts + orchestrator + agent builder), their jobs, and the skills each uses | All agents, agent builder |
 | — | [decision-log.md](decision-log.md) | Decisions made and pending | All agents |
+| — | [agent-brains.md](agent-brains.md) | Each agent's model, first name, voice, and working style | You, agent builder |
 | — | [how-to-talk-to-your-experts.md](how-to-talk-to-your-experts.md) | Example prompts: ask one expert or the whole team | You |
 
 ## The short version

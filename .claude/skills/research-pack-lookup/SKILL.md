@@ -5,6 +5,12 @@ description: "Find and quote facts from the Miami specialty coffee shop research
 
 # Research pack lookup
 
+## Step 0: your own knowledge folder
+
+Before the research pack, read every file in `knowledge/<your-agent-name>/` (start with its README). Documents there are newer and more specific than `docs/`; prefer them when they conflict, and say so.
+
+## The research pack
+
 The project's shared research lives in `docs/` (researched November 2026). Check it before going to the web.
 
 ## Where things are
@@ -24,6 +30,7 @@ The project's shared research lives in `docs/` (researched November 2026). Check
 | Sources and confidence ratings | `docs/10-sources.md` |
 | The team and its skills | `docs/expert-roster.md` |
 | Decisions already made | `docs/decision-log.md` |
+| Your own documents | `knowledge/<your-agent-name>/` |
 
 ## Steps
 

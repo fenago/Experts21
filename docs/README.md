@@ -18,7 +18,8 @@
 | 8 | [08-marketing.md](08-marketing.md) | Positioning, channels, launch plan, budget | Marketing |
 | 9 | [09-risks.md](09-risks.md) | The biggest risks, ranked, with how to reduce each | All agents, Risk |
 | 10 | [10-sources.md](10-sources.md) | Source list and confidence notes | All agents |
-| — | [expert-roster.md](expert-roster.md) | The 24 expert agents, their job descriptions, and the skills each needs | Agent builders |
+| — | [expert-roster.md](expert-roster.md) | The 26 agents (24 experts + orchestrator + agent builder), their jobs, and the skills each uses | All agents, agent builder |
+| — | [decision-log.md](decision-log.md) | Decisions made and pending | All agents |
 
 ## The short version
 

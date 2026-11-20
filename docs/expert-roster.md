@@ -1,150 +1,121 @@
 # Expert Roster — Miami Specialty Coffee Shop
 
-*Built November 2026 from the research in this folder (see [README.md](README.md)). Each role below is meant to become one agent.*
+*Built November 2026 from the research in this folder (see [README.md](README.md)). Every role below is a Claude Code project subagent in `.claude/agents/`, and every skill is a project skill in `.claude/skills/<skill-name>/SKILL.md`. See [CLAUDE.md](../CLAUDE.md) for how to use the team.*
 
-**How to read this file**
+**Totals:** 26 agents (24 experts + orchestrator + agent builder), 4 core skills, 38 specialist skills.
 
-- **Part 1** lists the experts (agents) with a one-line job description and the specialist skills each one needs.
-- **Part 2** lists the skills. Core skills are shared by every agent. Each specialist skill shows which agents use it.
-- **Part 3** is a quick count of how widely each skill is shared, to help decide which skills to build first.
+## Part 1 — The agents
 
-**Totals:** 24 agents, 4 core skills, 35 specialist skills.
+| ID | Agent (file name) | Expert | Domain | One-line job description | Specialist skills |
+|---|---|---|---|---|---|
+| A01 | `engagement-lead` | **Engagement Lead** | Leadership | Owns the overall project plan for the consultant: the timeline, the decision log, status, and what should happen next. | startup-budgeting, project-scheduling, funding-loan-packaging, risk-register, kpi-tracking, critical-review, synthesis-decision-tracking |
+| A02 | `coffee-business-strategist` | **Coffee Business Strategist** | Business strategy | Defines the concept, format, positioning, and growth path so the shop stands out in a crowded Miami market. | web-research, financial-modeling, competitor-mapping, customer-research, funding-loan-packaging, risk-register, brand-identity-naming |
+| A03 | `market-research-analyst` | **Market & Customer Research Analyst** | Market | Sizes the market, profiles Miami customer segments, and tests the concept with real data and surveys. | web-research, spreadsheet-building, demographic-analysis, site-scoring, competitor-mapping, customer-research |
+| A04 | `latin-market-advisor` | **Miami Latin Market & Culture Advisor** | Market | Makes sure the concept, menu, and messaging respect Miami's Cuban and Latin coffee culture and work in English and Spanish. | web-research, demographic-analysis, customer-research, menu-development, brand-identity-naming, bilingual-copywriting, pr-influencer-outreach |
+| A05 | `competitive-intel-analyst` | **Competitive Intelligence Analyst** | Market | Maps and monitors competitors (local roasters, chains, new entrants, ventanitas) around each candidate site and finds gaps. | web-research, spreadsheet-building, competitor-mapping |
+| A06 | `real-estate-advisor` | **Commercial Real Estate & Site Selection Advisor** | Real estate | Finds and scores sites, compares rents, and keeps occupancy cost at or below about 10% of projected sales. | web-research, financial-modeling, spreadsheet-building, demographic-analysis, site-scoring, lease-analysis |
+| A07 | `buildout-design-advisor` | **Café Design & Build-out Advisor** | Technical / construction | Plans the layout, build-out scope, contractor bids, and construction timeline, and checks a space's plumbing, power, HVAC, and grease-trap needs. | startup-budgeting, site-scoring, florida-regulatory-lookup, project-scheduling, hurricane-continuity-planning, equipment-spec-quoting, floor-plan-workflow |
+| A08 | `permitting-specialist` | **Permitting & Licensing Specialist** | Legal & compliance | Maps and tracks every state, county, and city approval (DBPR, Certificate of Use, BTRs, building, fire, signage, sidewalk café) in the right order. | web-research, florida-regulatory-lookup, project-scheduling |
+| A09 | `food-safety-specialist` | **Food Safety & Health Compliance Specialist** | Legal & compliance | Sets up the food safety program, staff certifications, and inspection readiness so the shop passes DBPR inspections. | web-research, florida-regulatory-lookup, sop-writing, food-safety-program |
+| A10 | `business-attorney` | **Business & Real Estate Attorney** | Legal & compliance | Advises on entity setup, lease terms, supplier and vendor contracts, personal guarantees, and Florida employment law. | web-research, lease-analysis, contract-review, florida-regulatory-lookup, employment-law-compliance, insurance-coverage-analysis |
+| A11 | `financial-modeling-analyst` | **Financial Modeling Analyst (FP&A)** | Finance | Builds and maintains the startup budget, monthly P&L, cash-flow forecast, and break-even and sensitivity models. | financial-modeling, startup-budgeting, spreadsheet-building, recipe-costing-pricing, lease-analysis, tax-bookkeeping-setup, funding-loan-packaging, insurance-coverage-analysis, risk-register, coffee-sourcing-quality, staffing-labor-scheduling, kpi-tracking |
+| A12 | `funding-advisor` | **Funding & Capital Advisor** | Finance | Finds the best mix of owner equity, SBA loans, equipment financing, landlord allowances, and local grants, and prepares the lender package. | web-research, financial-modeling, startup-budgeting, spreadsheet-building, funding-loan-packaging |
+| A13 | `accounting-tax-advisor` | **Accounting & Tax Advisor (CPA)** | Finance | Sets up the books, sales tax, payroll tax, and reemployment tax filings, and advises on tax-efficient structure. | web-research, spreadsheet-building, florida-regulatory-lookup, employment-law-compliance, tax-bookkeeping-setup, tech-stack-selection |
+| A14 | `insurance-risk-manager` | **Insurance & Risk Manager** | Risk | Designs insurance coverage (BOP, flood, wind, workers' comp), keeps the risk register, and writes the hurricane and continuity plan. | web-research, site-scoring, contract-review, insurance-coverage-analysis, risk-register, hurricane-continuity-planning, sop-writing |
+| A15 | `head-of-coffee` | **Head of Coffee (Sourcing & Roasting Expert)** | Coffee / product | Chooses roaster partners or an in-house roasting plan, sets quality standards, and manages green-coffee price risk. | web-research, recipe-costing-pricing, contract-review, coffee-sourcing-quality, menu-development, equipment-spec-quoting, sop-writing, recruiting-training |
+| A16 | `menu-beverage-developer` | **Menu & Beverage Developer** | Coffee / product | Creates the drink and food menu (including iced, matcha, and Latin signatures), recipe specs, and prices that hit target COGS. | spreadsheet-building, recipe-costing-pricing, competitor-mapping, coffee-sourcing-quality, menu-development |
+| A17 | `operations-manager` | **Café Operations Manager** | Operations | Designs daily operations: SOPs, opening and closing checklists, inventory, staffing levels, and service speed. | financial-modeling, spreadsheet-building, recipe-costing-pricing, project-scheduling, employment-law-compliance, hurricane-continuity-planning, menu-development, equipment-spec-quoting, floor-plan-workflow, sop-writing, food-safety-program, staffing-labor-scheduling, recruiting-training, kpi-tracking, tech-stack-selection |
+| A18 | `hr-talent-advisor` | **HR & Talent Advisor** | Operations / people | Plans the team structure, pay and tip policy, hiring, training, and retention within Florida labor rules. | web-research, employment-law-compliance, sop-writing, food-safety-program, staffing-labor-scheduling, recruiting-training, bilingual-copywriting |
+| A19 | `equipment-specialist` | **Coffee Equipment & Bar Engineering Specialist** | Technical | Specifies and sources the espresso machines, grinders, water filtration, ice machines, and refrigeration, and plans service and maintenance. | web-research, startup-budgeting, contract-review, equipment-spec-quoting, floor-plan-workflow |
+| A20 | `restaurant-tech-specialist` | **Restaurant Technology & Data Specialist** | Technical | Selects and connects the POS, online ordering, loyalty app, scheduling, and accounting tools, and builds the KPI dashboards. | web-research, contract-review, tax-bookkeeping-setup, hurricane-continuity-planning, equipment-spec-quoting, kpi-tracking, tech-stack-selection |
+| A21 | `brand-creative-director` | **Brand & Creative Director** | Marketing | Creates the bilingual name, visual identity, packaging, and in-store look that make the shop memorable and photo-worthy. | customer-research, floor-plan-workflow, brand-identity-naming, bilingual-copywriting, social-content-planning |
+| A22 | `digital-marketer` | **Digital & Social Media Marketer** | Marketing | Runs Instagram, TikTok, Google Business Profile, email/SMS, and loyalty campaigns, and measures what drives visits. | web-research, competitor-mapping, brand-identity-naming, bilingual-copywriting, social-content-planning, pr-influencer-outreach, kpi-tracking, tech-stack-selection |
+| A23 | `community-pr-manager` | **Community, PR & Partnerships Manager** | Marketing | Handles press, influencers, launch events, and partnerships with local businesses, schools, and the coffee community. | web-research, bilingual-copywriting, social-content-planning, pr-influencer-outreach |
+| A24 | `red-team-reviewer` | **Independent Reviewer (Red Team)** | Quality control | Challenges every major recommendation, tests assumptions against the research, and flags blind spots before decisions are made. | financial-modeling, risk-register, critical-review |
+| A25 | `orchestrator` | **Expert Team Orchestrator** | Leadership | Takes any question, decides which experts to bring in, has them work together, and returns one combined answer. | expert-routing, synthesis-decision-tracking, critical-review, web-research |
+| A26 | `agent-builder` | **Agent & Skill Builder (Meta Agent)** | Team building | Creates new agents and skills for this team and improves existing ones, keeping the roster, routing, and docs in sync. | agent-authoring, skill-authoring, web-research |
 
-## Part 1 — The experts
-
-| ID | Expert (agent) | Domain | One-line job description | Specialist skills |
-|---|---|---|---|---|
-| A01 | **Engagement Lead (Orchestrator)** | Leadership | Runs the engagement for the consultant: assigns questions to the right experts, merges their answers, tracks decisions, and keeps the plan on schedule. | K03, K13, K16, K18, K32, K34, K35 |
-| A02 | **Coffee Business Strategist** | Business strategy | Defines the concept, format, positioning, and growth path (e.g., kiosk first vs. full café, wholesale) so the shop stands out in a crowded Miami market. | K01, K02, K08, K09, K16, K18, K28 |
-| A03 | **Market & Customer Research Analyst** | Market | Sizes the market, profiles Miami customer segments, and tests the concept with real data and surveys. | K01, K04, K06, K07, K08, K09 |
-| A04 | **Miami Latin Market & Culture Advisor** | Market | Makes sure the concept, menu, and messaging respect Miami's Cuban and Latin coffee culture and work in English and Spanish. | K01, K06, K09, K21, K28, K29, K31 |
-| A05 | **Competitive Intelligence Analyst** | Market | Maps and monitors competitors (local roasters, chains, new entrants, ventanitas) around each candidate site and finds gaps. | K01, K04, K08 |
-| A06 | **Commercial Real Estate & Site Selection Advisor** | Real estate | Finds and scores sites, compares rents, and keeps occupancy cost at or below about 10% of projected sales. | K01, K02, K04, K06, K07, K10 |
-| A07 | **Café Design & Build-out Advisor** | Technical / construction | Plans the layout, build-out scope, contractor bids, and construction timeline, and checks a space's plumbing, power, HVAC, and grease-trap needs. | K03, K07, K12, K13, K19, K22, K23 |
-| A08 | **Permitting & Licensing Specialist** | Legal & compliance | Maps and tracks every state, county, and city approval (DBPR, Certificate of Use, BTRs, building, fire, signage, sidewalk café) in the right order. | K01, K12, K13 |
-| A09 | **Food Safety & Health Compliance Specialist** | Legal & compliance | Sets up the food safety program, staff certifications, and inspection readiness so the shop passes DBPR inspections. | K01, K12, K24, K25 |
-| A10 | **Business & Real Estate Attorney** | Legal & compliance | Advises on entity setup, lease terms, supplier and vendor contracts, personal guarantees, and Florida employment law. | K01, K10, K11, K12, K14, K17 |
-| A11 | **Financial Modeling Analyst (FP&A)** | Finance | Builds and maintains the startup budget, monthly P&L, cash-flow forecast, and break-even and sensitivity models. | K02, K03, K04, K05, K10, K15, K16, K17, K18, K20, K26, K32 |
-| A12 | **Funding & Capital Advisor** | Finance | Finds the best mix of owner equity, SBA loans, equipment financing, landlord allowances, and local grants, and prepares the lender package. | K01, K02, K03, K04, K16 |
-| A13 | **Accounting & Tax Advisor (CPA)** | Finance | Sets up the books, sales tax, payroll tax, and reemployment tax filings, and advises on tax-efficient structure. | K01, K04, K12, K14, K15, K33 |
-| A14 | **Insurance & Risk Manager** | Risk | Designs insurance coverage (BOP, flood, wind, workers' comp), keeps the risk register, and writes the hurricane and continuity plan. | K01, K07, K11, K17, K18, K19, K24 |
-| A15 | **Head of Coffee (Sourcing & Roasting Expert)** | Coffee / product | Chooses roaster partners or an in-house roasting plan, sets quality standards, and manages green-coffee price risk. | K01, K05, K11, K20, K21, K22, K24, K27 |
-| A16 | **Menu & Beverage Developer** | Coffee / product | Creates the drink and food menu (including iced, matcha, and Latin signatures), recipe specs, and prices that hit target COGS. | K04, K05, K08, K20, K21 |
-| A17 | **Café Operations Manager** | Operations | Designs daily operations: SOPs, opening and closing checklists, inventory, staffing levels, and service speed. | K02, K04, K05, K13, K14, K19, K21, K22, K23, K24, K25, K26, K27, K32, K33 |
-| A18 | **HR & Talent Advisor** | Operations / people | Plans the team structure, pay and tip policy, hiring, training, and retention within Florida labor rules. | K01, K14, K24, K25, K26, K27, K29 |
-| A19 | **Coffee Equipment & Bar Engineering Specialist** | Technical | Specifies and sources the espresso machines, grinders, water filtration, ice machines, and refrigeration, and plans service and maintenance. | K01, K03, K11, K22, K23 |
-| A20 | **Restaurant Technology & Data Specialist** | Technical | Selects and connects the POS, online ordering, loyalty app, scheduling, and accounting tools, and builds the KPI dashboards. | K01, K11, K15, K19, K22, K32, K33 |
-| A21 | **Brand & Creative Director** | Marketing | Creates the bilingual name, visual identity, packaging, and in-store look that make the shop memorable and photo-worthy. | K09, K23, K28, K29, K30 |
-| A22 | **Digital & Social Media Marketer** | Marketing | Runs Instagram, TikTok, Google Business Profile, email/SMS, and loyalty campaigns, and measures what drives visits. | K01, K08, K28, K29, K30, K31, K32, K33 |
-| A23 | **Community, PR & Partnerships Manager** | Marketing | Handles press, influencers, launch events, and partnerships with local businesses, schools, and the coffee community. | K01, K29, K30, K31 |
-| A24 | **Independent Reviewer (Red Team)** | Quality control | Challenges every major recommendation, tests assumptions against the research, and flags blind spots before decisions are made. | K02, K18, K34 |
+All 24 experts (A01–A24) also preload the 4 core skills. The orchestrator (A25) is the only agent allowed to call other agents. The red-team reviewer is read-only.
 
 ### Why these roles (link to the research)
 
-- **Real estate, lease and legal roles (A06, A10)** are central because rent is the #1 risk in [09-risks.md](09-risks.md) — Wynwood asks $100+/sq ft and even Panther Coffee is closing a shop over rent.
-- **Permitting and food safety roles (A08, A09)** cover the multi-agency approval chain in [06-permits-and-licenses.md](06-permits-and-licenses.md).
-- **Finance roles (A11–A13)** own the $360K–$990K budget and the ~340 transactions/day break-even in [04-startup-costs.md](04-startup-costs.md) and [05-operating-costs.md](05-operating-costs.md).
-- **Insurance & Risk (A14)** covers hurricanes, flood, and Florida's rising premiums.
-- **Miami Latin Market & Culture Advisor (A04)** reflects that 70.6% of Miami-Dade is Hispanic and 75% speak a language other than English at home ([02-target-customers.md](02-target-customers.md)), and that the clearest market gap is Latin-rooted specialty coffee ([03-competitors.md](03-competitors.md)).
-- **Technical roles (A07, A19, A20)** cover the build-out, the bar equipment (ice and water filtration matter in Miami), and the POS/loyalty/ordering stack.
-- **Independent Reviewer (A24)** guards against agents simply confirming each other.
+- **Real estate, lease and legal roles** are central because rent is the #1 risk in [09-risks.md](09-risks.md) — prime Wynwood asks $100+/sq ft and even Panther Coffee is closing a shop over rent.
+- **Permitting and food safety roles** cover the multi-agency approval chain in [06-permits-and-licenses.md](06-permits-and-licenses.md).
+- **Finance roles** own the $360K–$990K budget and the ~340 transactions/day break-even in [04-startup-costs.md](04-startup-costs.md) and [05-operating-costs.md](05-operating-costs.md).
+- **Insurance & Risk** covers hurricanes, flood, and Florida's rising premiums.
+- **Miami Latin Market & Culture Advisor** reflects that 70.6% of Miami-Dade is Hispanic ([02-target-customers.md](02-target-customers.md)) and that the clearest market gap is Latin-rooted specialty coffee ([03-competitors.md](03-competitors.md)).
+- **Technical roles** cover the build-out, bar equipment (ice and water filtration matter in Miami), and the POS/loyalty/ordering stack.
+- **Red team** guards against agents simply confirming each other; the **orchestrator** combines the experts into one answer; the **agent builder** grows and improves the team.
 
 ## Part 2 — Skills
 
-### Core skills (all 24 agents)
+### Core skills (all 24 experts, plus orchestrator and agent builder where listed)
 
-| ID | Skill | What it does |
+| Skill | What it does | Used by |
 |---|---|---|
-| C1 | Research pack lookup | Find and quote facts from the `docs/` research files before going elsewhere. |
-| C2 | Source citation & confidence | Cite every number, give its date, and rate confidence (high/medium/low); flag anything unverified. |
-| C3 | Recommendation memo writing | Write short, plain-language memos: the answer, the reasons, the numbers, the risks, and next steps. |
-| C4 | Assumptions & hand-offs | State assumptions clearly, and pass questions outside the agent's area to the right expert via the Engagement Lead. |
+| `research-pack-lookup` | Find and quote facts from the Miami specialty coffee shop research pack in docs/. Use first, before any web search, for any question about the market, customers, competitors, costs, permits, staffing, marketing, or risks. | All 24 experts, `orchestrator`, `agent-builder` |
+| `source-citation` | Cite every fact and number with its source and date, and rate confidence high, medium, or low. Use in every answer that contains facts, figures, prices, rules, or claims about competitors. | All 24 experts, `orchestrator`, `agent-builder` |
+| `recommendation-memo` | Write the final answer as a short, plain-language memo: bottom line first, then reasons, numbers, risks, and next steps. Use whenever returning advice or a deliverable to the consultant, Dr. Lee, or the orchestrator. | All 24 experts, `orchestrator` |
+| `assumptions-and-handoffs` | State assumptions explicitly and hand questions outside your area to the right expert on the team. Use whenever an answer depends on unknowns or touches another expert's area. | All 24 experts, `orchestrator`, `agent-builder` |
 
 ### Specialist skills
 
-| ID | Skill | What it does | Used by |
+| Skill | What it does | Used by | # |
 |---|---|---|---|
-| K01 | **Web & news research** | Find current, dated facts online (prices, rules, openings, closures) and note the source. | A02 Coffee Business Strategist; A03 Market & Customer Research Analyst; A04 Miami Latin Market & Culture Advisor; A05 Competitive Intelligence Analyst; A06 Commercial Real Estate & Site Selection Advisor; A08 Permitting & Licensing Specialist; A09 Food Safety & Health Compliance Specialist; A10 Business & Real Estate Attorney; A12 Funding & Capital Advisor; A13 Accounting & Tax Advisor (CPA); A14 Insurance & Risk Manager; A15 Head of Coffee (Sourcing & Roasting Expert); A18 HR & Talent Advisor; A19 Coffee Equipment & Bar Engineering Specialist; A20 Restaurant Technology & Data Specialist; A22 Digital & Social Media Marketer; A23 Community, PR & Partnerships Manager |
-| K02 | **Financial modeling** | Build P&L, break-even, and sensitivity models; test what happens if sales, rent, or wages change. | A02 Coffee Business Strategist; A06 Commercial Real Estate & Site Selection Advisor; A11 Financial Modeling Analyst (FP&A); A12 Funding & Capital Advisor; A17 Café Operations Manager; A24 Independent Reviewer (Red Team) |
-| K03 | **Startup budgeting (capex)** | Estimate one-time opening costs by line item with low/high ranges and contingency. | A01 Engagement Lead (Orchestrator); A07 Café Design & Build-out Advisor; A11 Financial Modeling Analyst (FP&A); A12 Funding & Capital Advisor; A19 Coffee Equipment & Bar Engineering Specialist |
-| K04 | **Spreadsheet building** | Create clean, reusable spreadsheets (budgets, competitor sheets, site scorecards, recipe costs). | A03 Market & Customer Research Analyst; A05 Competitive Intelligence Analyst; A06 Commercial Real Estate & Site Selection Advisor; A11 Financial Modeling Analyst (FP&A); A12 Funding & Capital Advisor; A13 Accounting & Tax Advisor (CPA); A16 Menu & Beverage Developer; A17 Café Operations Manager |
-| K05 | **Recipe costing & menu pricing** | Cost each drink and food item and set prices that hit target COGS (about 25–32%). | A11 Financial Modeling Analyst (FP&A); A15 Head of Coffee (Sourcing & Roasting Expert); A16 Menu & Beverage Developer; A17 Café Operations Manager |
-| K06 | **Demographic & census analysis** | Pull and read Census and neighborhood data (income, age, language, population). | A03 Market & Customer Research Analyst; A04 Miami Latin Market & Culture Advisor; A06 Commercial Real Estate & Site Selection Advisor |
-| K07 | **Site scoring** | Score sites on foot traffic, parking, visibility, flood zone, co-tenants, and nearby competition. | A03 Market & Customer Research Analyst; A06 Commercial Real Estate & Site Selection Advisor; A07 Café Design & Build-out Advisor; A14 Insurance & Risk Manager |
-| K08 | **Competitor mapping & mystery shopping** | List competitors near a site, compare price, speed, quality, and reviews; plan store visits. | A02 Coffee Business Strategist; A03 Market & Customer Research Analyst; A05 Competitive Intelligence Analyst; A16 Menu & Beverage Developer; A22 Digital & Social Media Marketer |
-| K09 | **Customer surveys & concept testing** | Design surveys, tasting events, and pop-up tests, and summarize the results. | A02 Coffee Business Strategist; A03 Market & Customer Research Analyst; A04 Miami Latin Market & Culture Advisor; A21 Brand & Creative Director |
-| K10 | **Lease analysis & negotiation** | Compare lease offers (base rent, NNN, TI allowance, free rent, guarantees, renewals) and occupancy-cost ratio. | A06 Commercial Real Estate & Site Selection Advisor; A10 Business & Real Estate Attorney; A11 Financial Modeling Analyst (FP&A) |
-| K11 | **Contract review** | Read leases and supplier, equipment, franchise, and software contracts; flag risky terms. | A10 Business & Real Estate Attorney; A14 Insurance & Risk Manager; A15 Head of Coffee (Sourcing & Roasting Expert); A19 Coffee Equipment & Bar Engineering Specialist; A20 Restaurant Technology & Data Specialist |
-| K12 | **Florida & Miami-Dade regulatory lookup** | Look up DBPR, Certificate of Use, county/city BTR, zoning, building, fire, and sidewalk café rules for a given address. | A07 Café Design & Build-out Advisor; A08 Permitting & Licensing Specialist; A09 Food Safety & Health Compliance Specialist; A10 Business & Real Estate Attorney; A13 Accounting & Tax Advisor (CPA) |
-| K13 | **Project scheduling (critical path)** | Build the opening timeline and show which permits and construction steps drive the date. | A01 Engagement Lead (Orchestrator); A07 Café Design & Build-out Advisor; A08 Permitting & Licensing Specialist; A17 Café Operations Manager |
-| K14 | **Employment-law compliance** | Apply Florida minimum wage, tip credit, tip pooling, overtime, E-Verify, workers' comp, and minor-labor rules. | A10 Business & Real Estate Attorney; A13 Accounting & Tax Advisor (CPA); A17 Café Operations Manager; A18 HR & Talent Advisor |
-| K15 | **Tax & bookkeeping setup** | Set up chart of accounts, sales tax, payroll tax, and reemployment tax filings. | A11 Financial Modeling Analyst (FP&A); A13 Accounting & Tax Advisor (CPA); A20 Restaurant Technology & Data Specialist |
-| K16 | **Funding & loan packaging** | Write the business plan and lender package (e.g., SBA 7(a)) and compare funding options. | A01 Engagement Lead (Orchestrator); A02 Coffee Business Strategist; A11 Financial Modeling Analyst (FP&A); A12 Funding & Capital Advisor |
-| K17 | **Insurance coverage analysis** | Compare BOP, property, flood, wind deductible, liability, and workers' comp quotes and gaps. | A10 Business & Real Estate Attorney; A11 Financial Modeling Analyst (FP&A); A14 Insurance & Risk Manager |
-| K18 | **Risk register & scenario planning** | Keep a ranked risk list with likelihood, impact, owner, and mitigation; run best/base/worst cases. | A01 Engagement Lead (Orchestrator); A02 Coffee Business Strategist; A11 Financial Modeling Analyst (FP&A); A14 Insurance & Risk Manager; A24 Independent Reviewer (Red Team) |
-| K19 | **Hurricane & business-continuity planning** | Plan for storms and outages: shutters, backup power, inventory protection, staff communication, data backup, reopening. | A07 Café Design & Build-out Advisor; A14 Insurance & Risk Manager; A17 Café Operations Manager; A20 Restaurant Technology & Data Specialist |
-| K20 | **Coffee sourcing & quality evaluation** | Cup and compare roasters and green coffees, negotiate fixed-price contracts, and track the coffee market. | A11 Financial Modeling Analyst (FP&A); A15 Head of Coffee (Sourcing & Roasting Expert); A16 Menu & Beverage Developer |
-| K21 | **Beverage & food menu development** | Create drink and food recipes, including iced, matcha, non-coffee, and Latin signature items. | A04 Miami Latin Market & Culture Advisor; A15 Head of Coffee (Sourcing & Roasting Expert); A16 Menu & Beverage Developer; A17 Café Operations Manager |
-| K22 | **Equipment specification & vendor quoting** | Spec equipment by volume and menu; get and compare quotes, warranties, and service terms. | A07 Café Design & Build-out Advisor; A15 Head of Coffee (Sourcing & Roasting Expert); A17 Café Operations Manager; A19 Coffee Equipment & Bar Engineering Specialist; A20 Restaurant Technology & Data Specialist |
-| K23 | **Floor plan & bar workflow design** | Lay out the bar, queue, seating, and storage so baristas move efficiently and customers flow well. | A07 Café Design & Build-out Advisor; A17 Café Operations Manager; A19 Coffee Equipment & Bar Engineering Specialist; A21 Brand & Creative Director |
-| K24 | **SOP & checklist writing** | Write step-by-step procedures, recipe cards, and opening, closing, and cleaning checklists. | A09 Food Safety & Health Compliance Specialist; A14 Insurance & Risk Manager; A15 Head of Coffee (Sourcing & Roasting Expert); A17 Café Operations Manager; A18 HR & Talent Advisor |
-| K25 | **Food safety program** | Set up temperature logs, allergen handling, sanitation, and DBPR-approved staff certifications. | A09 Food Safety & Health Compliance Specialist; A17 Café Operations Manager; A18 HR & Talent Advisor |
-| K26 | **Staffing model & labor scheduling** | Match staff hours to hourly sales and keep labor near 30–35% of sales. | A11 Financial Modeling Analyst (FP&A); A17 Café Operations Manager; A18 HR & Talent Advisor |
-| K27 | **Recruiting & training design** | Write job posts, interview scorecards, and the pre-opening and ongoing training plan. | A15 Head of Coffee (Sourcing & Roasting Expert); A17 Café Operations Manager; A18 HR & Talent Advisor |
-| K28 | **Brand identity & naming** | Develop a name, tagline, story, and visual identity that work in English and Spanish. | A02 Coffee Business Strategist; A04 Miami Latin Market & Culture Advisor; A21 Brand & Creative Director; A22 Digital & Social Media Marketer |
-| K29 | **Bilingual copywriting (EN/ES)** | Write and translate menus, signs, posts, and job ads in natural English and Miami Spanish. | A04 Miami Latin Market & Culture Advisor; A18 HR & Talent Advisor; A21 Brand & Creative Director; A22 Digital & Social Media Marketer; A23 Community, PR & Partnerships Manager |
-| K30 | **Social content planning** | Plan Instagram and TikTok content calendars, short-video ideas, and captions. | A21 Brand & Creative Director; A22 Digital & Social Media Marketer; A23 Community, PR & Partnerships Manager |
-| K31 | **PR, influencer & partnership outreach** | Build press and influencer lists, write pitches, and set up local partnerships and events. | A04 Miami Latin Market & Culture Advisor; A22 Digital & Social Media Marketer; A23 Community, PR & Partnerships Manager |
-| K32 | **KPI tracking & analytics** | Define and track transactions, average ticket, labor %, COGS %, repeat rate, reviews, and campaign results. | A01 Engagement Lead (Orchestrator); A11 Financial Modeling Analyst (FP&A); A17 Café Operations Manager; A20 Restaurant Technology & Data Specialist; A22 Digital & Social Media Marketer |
-| K33 | **Restaurant tech stack selection** | Compare POS, loyalty, online ordering, scheduling, and accounting tools and how they connect. | A13 Accounting & Tax Advisor (CPA); A17 Café Operations Manager; A20 Restaurant Technology & Data Specialist; A22 Digital & Social Media Marketer |
-| K34 | **Critical review (red-teaming)** | Stress-test a recommendation: find weak assumptions, missing data, and the worst-case outcome. | A01 Engagement Lead (Orchestrator); A24 Independent Reviewer (Red Team) |
-| K35 | **Cross-agent synthesis & decision tracking** | Combine expert answers into one recommendation and keep a log of decisions and open questions. | A01 Engagement Lead (Orchestrator) |
+| `web-research` | Find current, dated facts online (rules, prices, rents, openings, closures, competitor news) and record the source. Use when the research pack is missing a fact or it may be out of date. | `coffee-business-strategist`, `market-research-analyst`, `latin-market-advisor`, `competitive-intel-analyst`, `real-estate-advisor`, `permitting-specialist`, `food-safety-specialist`, `business-attorney`, `funding-advisor`, `accounting-tax-advisor`, `insurance-risk-manager`, `head-of-coffee`, `hr-talent-advisor`, `equipment-specialist`, `restaurant-tech-specialist`, `digital-marketer`, `community-pr-manager`, `orchestrator`, `agent-builder` | 19 |
+| `financial-modeling` | Build and test P&L, cash-flow, break-even, and sensitivity models for the café. Use for any question about profit, break-even, affordability of rent or wages, or what-if scenarios. | `coffee-business-strategist`, `real-estate-advisor`, `financial-modeling-analyst`, `funding-advisor`, `operations-manager`, `red-team-reviewer` | 6 |
+| `startup-budgeting` | Estimate one-time opening costs by line item with low, base, and high ranges plus contingency and reserves. Use for questions about how much it costs to open, or to build a sources-and-uses table. | `engagement-lead`, `buildout-design-advisor`, `financial-modeling-analyst`, `funding-advisor`, `equipment-specialist` | 5 |
+| `spreadsheet-building` | Create clean, reusable spreadsheets (budgets, models, competitor sheets, site scorecards, recipe costs). Use whenever a deliverable is a table someone will update or calculate with. | `market-research-analyst`, `competitive-intel-analyst`, `real-estate-advisor`, `financial-modeling-analyst`, `funding-advisor`, `accounting-tax-advisor`, `menu-beverage-developer`, `operations-manager` | 8 |
+| `recipe-costing-pricing` | Cost each drink and food item and set prices that hit target cost of goods. Use for menu pricing, COGS questions, or when coffee, milk, or packaging prices change. | `financial-modeling-analyst`, `head-of-coffee`, `menu-beverage-developer`, `operations-manager` | 4 |
+| `demographic-analysis` | Pull and interpret population, income, age, language, and worker data for Miami-Dade neighborhoods or a site's trade area. Use for customer sizing and site comparisons. | `market-research-analyst`, `latin-market-advisor`, `real-estate-advisor` | 3 |
+| `site-scoring` | Score and compare candidate locations on foot traffic, access, parking, rent, competition, customer fit, flood risk, and space fit. Use when evaluating any address or neighborhood. | `market-research-analyst`, `real-estate-advisor`, `buildout-design-advisor`, `insurance-risk-manager` | 4 |
+| `competitor-mapping` | List and compare competitors around a site or in a segment, and plan store visits. Use for competitive analysis, pricing benchmarks, or finding market gaps. | `coffee-business-strategist`, `market-research-analyst`, `competitive-intel-analyst`, `menu-beverage-developer`, `digital-marketer` | 5 |
+| `customer-research` | Design bilingual surveys, tasting events, and pop-up tests, and summarize what customers want and will pay. Use to validate the concept, menu, prices, or a neighborhood before committing. | `coffee-business-strategist`, `market-research-analyst`, `latin-market-advisor`, `brand-creative-director` | 4 |
+| `lease-analysis` | Compare lease offers and build negotiation asks (rent, NNN, TI allowance, free rent, guarantees, renewals). Use for any lease, letter of intent, or rent question. | `real-estate-advisor`, `business-attorney`, `financial-modeling-analyst` | 3 |
+| `contract-review` | Read leases and supplier, equipment, franchise, and software contracts and flag risky terms in plain language. Use before signing any agreement. | `business-attorney`, `insurance-risk-manager`, `head-of-coffee`, `equipment-specialist`, `restaurant-tech-specialist` | 5 |
+| `florida-regulatory-lookup` | Look up which state, county, and city approvals apply to a café at a given address, and what each requires. Use for licensing, permits, zoning, inspections, or compliance questions. | `buildout-design-advisor`, `permitting-specialist`, `food-safety-specialist`, `business-attorney`, `accounting-tax-advisor` | 5 |
+| `project-scheduling` | Build the opening timeline, show dependencies, and identify which steps drive the opening date. Use for timeline questions, delays, or planning what to do next. | `engagement-lead`, `buildout-design-advisor`, `permitting-specialist`, `operations-manager` | 4 |
+| `employment-law-compliance` | Apply Florida and federal wage, tip, overtime, hiring-verification, workers' comp, and minor-labor rules to café staffing. Use for pay policy, tip pooling, scheduling, or hiring compliance. | `business-attorney`, `accounting-tax-advisor`, `operations-manager`, `hr-talent-advisor` | 4 |
+| `tax-bookkeeping-setup` | Set up the chart of accounts and the sales tax, payroll tax, and reemployment tax filings for a Florida café. Use for accounting setup, tax registration, or filing questions. | `financial-modeling-analyst`, `accounting-tax-advisor`, `restaurant-tech-specialist` | 3 |
+| `funding-loan-packaging` | Compare funding options and prepare the business plan and lender package (e.g., SBA 7(a)). Use for questions about raising money, loans, investors, or sources and uses. | `engagement-lead`, `coffee-business-strategist`, `financial-modeling-analyst`, `funding-advisor` | 4 |
+| `insurance-coverage-analysis` | Compare insurance quotes and find coverage gaps for a Miami café (property, liability, flood, wind, business interruption, workers' comp). Use for insurance questions or lease insurance requirements. | `business-attorney`, `financial-modeling-analyst`, `insurance-risk-manager` | 3 |
+| `risk-register` | Keep a ranked list of project risks with likelihood, impact, owner, mitigation, and warning signs, and run best/base/worst scenarios. Use for risk reviews, go/no-go decisions, or planning. | `engagement-lead`, `coffee-business-strategist`, `financial-modeling-analyst`, `insurance-risk-manager`, `red-team-reviewer` | 5 |
+| `hurricane-continuity-planning` | Plan for hurricanes, floods, and power outages: preparation, shutdown, recovery, and reopening. Use for storm season planning, continuity plans, or site flood-risk questions. | `buildout-design-advisor`, `insurance-risk-manager`, `operations-manager`, `restaurant-tech-specialist` | 4 |
+| `coffee-sourcing-quality` | Evaluate roasters and green coffees, run cuppings, negotiate supply contracts, and manage coffee price risk. Use for choosing a roaster, setting quality standards, or deciding on in-house roasting. | `financial-modeling-analyst`, `head-of-coffee`, `menu-beverage-developer` | 3 |
+| `menu-development` | Create drink and food recipes, menu structure, and recipe spec cards, including iced, matcha, non-coffee, and Latin signature items. Use for menu design, new drinks, or recipe standards. | `latin-market-advisor`, `head-of-coffee`, `menu-beverage-developer`, `operations-manager` | 4 |
+| `equipment-spec-quoting` | Specify coffee and kitchen equipment by volume and menu, and compare vendor quotes, lead times, warranties, and service. Use for equipment lists, purchase decisions, or utility requirements. | `buildout-design-advisor`, `head-of-coffee`, `operations-manager`, `equipment-specialist`, `restaurant-tech-specialist` | 5 |
+| `floor-plan-workflow` | Lay out the bar, queue, pickup, seating, and storage so baristas move efficiently and customers flow well. Use for space planning, walk-up window design, or evaluating whether a space works. | `buildout-design-advisor`, `operations-manager`, `equipment-specialist`, `brand-creative-director` | 4 |
+| `sop-writing` | Write step-by-step standard operating procedures, recipe cards, and opening, closing, and cleaning checklists in simple English and Spanish. Use whenever a repeatable task needs a standard. | `food-safety-specialist`, `insurance-risk-manager`, `head-of-coffee`, `operations-manager`, `hr-talent-advisor` | 5 |
+| `food-safety-program` | Set up food safety practices, logs, staff certifications, and DBPR inspection readiness for a café. Use for food handling, inspections, certifications, or after a power outage. | `food-safety-specialist`, `operations-manager`, `hr-talent-advisor` | 3 |
+| `staffing-labor-scheduling` | Build the staffing plan and weekly schedules that match staff hours to hourly sales and keep labor near target. Use for headcount, scheduling, or labor cost questions. | `financial-modeling-analyst`, `operations-manager`, `hr-talent-advisor` | 3 |
+| `recruiting-training` | Write job posts, interview scorecards, onboarding checklists, and pre-opening and ongoing training plans. Use for hiring baristas, leads, or managers, or designing training. | `head-of-coffee`, `operations-manager`, `hr-talent-advisor` | 3 |
+| `brand-identity-naming` | Develop a bilingual name, tagline, brand story, and visual identity, and check name availability. Use for naming, rebranding, or brand guidelines. | `coffee-business-strategist`, `latin-market-advisor`, `brand-creative-director`, `digital-marketer` | 4 |
+| `bilingual-copywriting` | Write and translate menus, signs, social posts, job ads, and customer messages in natural English and Miami Spanish. Use for any customer- or staff-facing text. | `latin-market-advisor`, `hr-talent-advisor`, `brand-creative-director`, `digital-marketer`, `community-pr-manager` | 5 |
+| `social-content-planning` | Plan Instagram and TikTok content calendars, short-video ideas, and bilingual captions tied to Miami's calendar. Use for social media plans, launch content, or campaign ideas. | `brand-creative-director`, `digital-marketer`, `community-pr-manager` | 3 |
+| `pr-influencer-outreach` | Build media and influencer lists, write pitches and press kits, and set up local partnerships and events. Use for launch PR, events, collaborations, or community building. | `latin-market-advisor`, `digital-marketer`, `community-pr-manager` | 3 |
+| `kpi-tracking` | Define, track, and report the café's key numbers (sales, transactions, ticket, labor %, COGS %, occupancy, repeat rate, reviews, campaign results). Use for dashboards, performance reviews, or diagnosing problems. | `engagement-lead`, `financial-modeling-analyst`, `operations-manager`, `restaurant-tech-specialist`, `digital-marketer` | 5 |
+| `tech-stack-selection` | Compare and choose POS, payments, online ordering, loyalty, delivery, scheduling, payroll, accounting, and Wi-Fi tools and how they connect. Use for any café technology decision. | `accounting-tax-advisor`, `operations-manager`, `restaurant-tech-specialist`, `digital-marketer` | 4 |
+| `critical-review` | Stress-test a recommendation by finding weak assumptions, missing data, and worst-case outcomes. Use before any major decision, large spend, or when experts all agree too easily. | `engagement-lead`, `red-team-reviewer`, `orchestrator` | 3 |
+| `synthesis-decision-tracking` | Combine several experts' answers into one recommendation and keep the decision log and open-question list. Use when merging expert input or recording a decision. | `engagement-lead`, `orchestrator` | 2 |
+| `expert-routing` | Decide which experts on this team should answer a question, in what order, and how to brief them. Use at the start of every multi-expert question. | `orchestrator` | 1 |
+| `agent-authoring` | Create or improve Claude Code project subagents for this team in .claude/agents/, following the official format and this project's conventions. Use when adding a new expert or fixing an existing one. | `agent-builder` | 1 |
+| `skill-authoring` | Create or improve Claude Code project skills in .claude/skills/, following the official format, and wire them to the agents that use them. Use when adding a capability or fixing a skill that gives poor results. | `agent-builder` | 1 |
 
-## Part 3 — Most shared skills (build these first)
+## Part 3 — Most shared specialist skills
 
 | Skill | # of agents |
 |---|---|
-| C1–C4 Core skills | 24 |
-| K01 Web & news research | 17 |
-| K04 Spreadsheet building | 8 |
-| K02 Financial modeling | 6 |
-| K03 Startup budgeting (capex) | 5 |
-| K08 Competitor mapping & mystery shopping | 5 |
-| K11 Contract review | 5 |
-| K12 Florida & Miami-Dade regulatory lookup | 5 |
-| K18 Risk register & scenario planning | 5 |
-| K22 Equipment specification & vendor quoting | 5 |
-| K24 SOP & checklist writing | 5 |
-| K29 Bilingual copywriting (EN/ES) | 5 |
-| K32 KPI tracking & analytics | 5 |
-| K05 Recipe costing & menu pricing | 4 |
-| K07 Site scoring | 4 |
-| K09 Customer surveys & concept testing | 4 |
-| K13 Project scheduling (critical path) | 4 |
-| K14 Employment-law compliance | 4 |
-| K16 Funding & loan packaging | 4 |
-| K19 Hurricane & business-continuity planning | 4 |
-| K21 Beverage & food menu development | 4 |
-| K23 Floor plan & bar workflow design | 4 |
-| K28 Brand identity & naming | 4 |
-| K33 Restaurant tech stack selection | 4 |
-| K06 Demographic & census analysis | 3 |
-| K10 Lease analysis & negotiation | 3 |
-| K15 Tax & bookkeeping setup | 3 |
-| K17 Insurance coverage analysis | 3 |
-| K20 Coffee sourcing & quality evaluation | 3 |
-| K25 Food safety program | 3 |
-| K26 Staffing model & labor scheduling | 3 |
-| K27 Recruiting & training design | 3 |
-| K30 Social content planning | 3 |
-| K31 PR, influencer & partnership outreach | 3 |
-| K34 Critical review (red-teaming) | 2 |
-| K35 Cross-agent synthesis & decision tracking | 1 |
+| `web-research` | 19 |
+| `spreadsheet-building` | 8 |
+| `financial-modeling` | 6 |
+| `startup-budgeting` | 5 |
+| `competitor-mapping` | 5 |
+| `contract-review` | 5 |
+| `florida-regulatory-lookup` | 5 |
+| `risk-register` | 5 |
+| `equipment-spec-quoting` | 5 |
+| `sop-writing` | 5 |
 
-## Suggested build order
+## Keeping this file current
 
-1. **Engagement Lead (A01)** and the **core skills (C1–C4)** — everything routes through them.
-2. **Decision-shaping experts** for the open questions in [README.md](README.md): Strategist (A02), Market Research (A03), Real Estate (A06), Financial Modeling (A11), Funding (A12).
-3. **Gatekeepers:** Attorney (A10), Permitting (A08), Insurance & Risk (A14), Red Team (A24).
-4. **Build and launch experts:** Design & Build-out (A07), Equipment (A19), Head of Coffee (A15), Menu (A16), Operations (A17), HR (A18), Technology (A20).
-5. **Go-to-market experts:** Brand (A21), Digital Marketing (A22), PR & Partnerships (A23), Latin Market Advisor (A04), Competitive Intelligence (A05), Accounting & Tax (A13), Food Safety (A09).
+When an agent or skill is added or changed, the `agent-builder` agent updates this file, `CLAUDE.md`, and the routing tables, then runs `python3 scripts/validate_team.py`.

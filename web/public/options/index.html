@@ -1,0 +1,98 @@
+<!doctype html>
+<!--
+  Design options for the Experts21 web app (static previews). System font stack only; icons are inline Lucide (ISC License,
+  Copyright (c) 2026 Lucide Icons and Contributors). No SF Symbols, no Apple logos.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Experts21 design options</title>
+<style>
+  :root { color-scheme: light dark; --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+    --bg:#f2f2f7; --surface:#fff; --label:#000; --label-2:#58585d; --sep:#d1d1d6; --accent:#0059b3; --control-border:#8a8a8f; --rec:#e3f5e8; --rec-fg:#1a6b2f; }
+  @media (prefers-color-scheme: dark) { :root { --bg:#000; --surface:#1c1c1e; --label:#fff; --label-2:#aeaeb2; --sep:#38383a; --accent:#64b0ff; --control-border:#8e8e93; --rec:#12301b; --rec-fg:#6be28a; } }
+  @media (prefers-contrast: more) { :root { --label-2:#3a3a3c; --sep:#000; --accent:#0040dd; } }
+  @media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --label-2:#e5e5ea; --sep:#fff; --accent:#8cc4ff; } }
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 400 1.0625rem/1.45 var(--font); background: var(--bg); color: var(--label); }
+  main { max-width: 980px; margin: 0 auto; padding: 24px 16px 48px; }
+  h1 { font-size: 2.125rem; line-height: 1.2; margin: 0 0 8px; }
+  h2 { font-size: 1.375rem; margin: 0 0 4px; }
+  p { margin: 0 0 12px; max-width: 70ch; }
+  .lead { color: var(--label-2); }
+  .grid { display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(min(100%, 290px), 1fr)); margin: 24px 0; }
+  .card { background: var(--surface); border: 1px solid var(--sep); border-radius: 20px; padding: 20px; display: flex; flex-direction: column; }
+  .card dl { margin: 0 0 16px; } .card dt { font-weight: 600; font-size: .8125rem; color: var(--label-2); text-transform: uppercase; letter-spacing: .04em; margin-top: 10px; }
+  .card dd { margin: 2px 0 0; }
+  .go { margin-top: auto; display: inline-flex; align-items: center; justify-content: center; min-height: 44px; padding: 0 18px; border-radius: 22px; background: var(--accent); color: #fff; font-weight: 600; text-decoration: none; }
+  @media (prefers-color-scheme: dark) { .go { background: #0060d0; } }
+  .go:focus-visible, a:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+  .tag { display: inline-block; align-self: flex-start; background: var(--rec); color: var(--rec-fg); font-weight: 700; font-size: .8125rem; padding: 2px 10px; border-radius: 999px; margin-bottom: 8px; }
+  .tag.none { visibility: hidden; height: 0; margin: 0; padding: 0; }
+  .tablewrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: .9375rem; background: var(--surface); border: 1px solid var(--sep); }
+  th, td { text-align: left; padding: 8px 12px; border-bottom: 1px solid var(--sep); vertical-align: top; }
+  th { font-weight: 600; }
+  a { color: var(--accent); }
+  .note { color: var(--label-2); font-size: .9375rem; }
+  @media (prefers-contrast: more) { .card, table { border: 2px solid var(--label); } }
+  @media (forced-colors: active) { .card, table, .go { border: 1px solid CanvasText; } }
+</style>
+</head>
+<body>
+<main>
+  <h1>Experts21 design options</h1>
+  <p class="lead">Three static previews of the app's main screen, built from the real team list (27 experts plus Elena), a real Brickell lease question, and Wren's top usability fixes. Each page works on a phone (tab bar) and on a desktop (sidebar). Buttons don't call the API.</p>
+  <p><b>Recommendation: Option A, Liquid Glass.</b> It gives the Apple feel the project asked for, and it passes every check in this audit. Option B is the safe fallback if glass feels like too much.</p>
+  <div class="grid">
+    <section class="card" aria-labelledby="h-A">
+      <span class="tag">Recommended</span>
+      <h2 id="h-A">Option A: Liquid Glass</h2>
+      <p>A frosted, floating glass sidebar, toolbar, and tab bar over a soft warm wash. Cards and answers stay solid.</p>
+      <dl>
+        <dt>Best for</dt><dd>A brand feel that looks like the newest Apple apps.</dd>
+        <dt>Trade-offs</dt><dd>Most glass to get right: needs the solid fallbacks, and more GPU work than B.</dd>
+        <dt>Accessibility audit</dt><dd>Passed: axe (WCAG 2.2 AA) zero violations in 100 runs (light, dark, increase contrast, reduced motion, forced colors, reduce-transparency and more-contrast switches; phone and desktop); every target at least 44x44px; works at 200% text; glass tint checked over white and black.</dd>
+      </dl>
+      <a class="go" href="a-liquid-glass.html">Open Option A<span class="sr-only"> (Liquid Glass)</span></a>
+    </section>
+    <section class="card" aria-labelledby="h-B">
+      
+      <h2 id="h-B">Option B: Clean Apple Light</h2>
+      <p>Solid white surfaces, grouped lists, and hairlines. Glass appears only on the phone tab bar.</p>
+      <dl>
+        <dt>Best for</dt><dd>Reading long answers, older devices, and the lowest risk of legibility trouble.</dd>
+        <dt>Trade-offs</dt><dd>Calmer and less distinctive. Looks like a standard iOS settings app.</dd>
+        <dt>Accessibility audit</dt><dd>Passed: axe (WCAG 2.2 AA) zero violations in 100 runs (same modes as A); every target at least 44x44px; works at 200% text; glass only on the tab bar.</dd>
+      </dl>
+      <a class="go" href="b-clean-apple-light.html">Open Option B<span class="sr-only"> (Clean Apple Light)</span></a>
+    </section>
+    <section class="card" aria-labelledby="h-C">
+      
+      <h2 id="h-C">Option C: Dark Pro</h2>
+      <p>Dark-only, macOS-style: flush dark-glass sidebar and toolbar, dense rows, amber accent, flat conversation.</p>
+      <dl>
+        <dt>Best for</dt><dd>Power use at a desk, long sessions, and a pro-tool feel.</dd>
+        <dt>Trade-offs</dt><dd>No light theme. Denser rows, and amber on black is a different look from Apple's blue.</dd>
+        <dt>Accessibility audit</dt><dd>Passed: axe (WCAG 2.2 AA) zero violations in 100 runs (dark-only; also tested with light preference, increase contrast, reduced motion, forced colors, and the switches); every target at least 44x44px; works at 200% text.</dd>
+      </dl>
+      <a class="go" href="c-dark-pro.html">Open Option C<span class="sr-only"> (Dark Pro)</span></a>
+    </section>
+  </div>
+  <h2>What changed from the live app (all options)</h2>
+  <ul>
+    <li><b>Navigation:</b> bottom tab bar on phones (Team, Experts, History); persistent sidebar on wide screens with search, Ask the whole team pinned, Recent, then the expert groups.</li>
+    <li><b>Failure states:</b> a failed question stays in the thread with “Not sent.” and Try again. A failed expert in a team run stays open with Retry, and Elena's answer says who is missing. Status uses an icon and words, not red alone.</li>
+    <li><b>Header:</b> one line (name and title) with an About button for voice, working style, and model, written in plain words.</li>
+    <li><b>Type:</b> everything is in rem, with a 17px body and a 16px minimum for the text box, so it follows text-size settings.</li>
+    <li><b>Selection:</b> a leading bar, tint, and weight, plus <code>aria-current</code>, so it survives forced colors.</li>
+  </ul>
+  <h2>How to test accessibility switches</h2>
+  <p class="note">Browsers can't always emulate Reduce Transparency, so each option accepts a query string: <code>?a11y=reduce-transparency</code>, <code>?a11y=more-contrast</code>, <code>?a11y=reduce-motion</code> (combine with commas). The real OS settings are also honored.</p>
+  <p class="note">Sample content is illustrative, not live model output. Figures come from the landlord offer file and the research pack (docs/05-operating-costs.md). Not tested: real VoiceOver, a real phone.</p>
+</main>
+<style>.sr-only{position:absolute;width:1px;height:1px;margin:-1px;padding:0;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap;border:0}</style>
+</body>
+</html>

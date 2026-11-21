@@ -1,0 +1,422 @@
+<!doctype html>
+<!--
+  Option A of 3 — Liquid Glass. Static design preview for the Experts web app (no API calls).
+  Generated from web/src/generated/team.json and the Brickell landlord offer (knowledge/real-estate-advisor/landlord-offer-brickell.md).
+  System font stack only (no SF Pro). Icons: Lucide (https://lucide.dev), ISC License, Copyright (c) 2026 Lucide Icons and Contributors.
+  No SF Symbols, no Apple logos. Accessibility switches for testing: ?a11y=reduce-transparency, ?a11y=more-contrast, ?a11y=reduce-motion (comma-separated).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Experts21, Option A: Liquid Glass</title>
+<script>
+  (function () {
+    try {
+      var q = new URLSearchParams(location.search).get("a11y") || "";
+      var c = document.documentElement.classList;
+      if (q.indexOf("reduce-transparency") > -1) c.add("a11y-rt");
+      if (q.indexOf("more-contrast") > -1) c.add("a11y-hc");
+      if (q.indexOf("reduce-motion") > -1) c.add("a11y-rm");
+    } catch (e) {}
+  })();
+</script>
+<link rel="stylesheet" href="shared.css">
+<style>
+
+/* Option A: Liquid Glass. Glass = sidebar, toolbar, tab bar (navigation/controls). Cards and messages stay solid. */
+:root { color-scheme: light dark; --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  --bg:#f2f2f7;
+  --wash: radial-gradient(60% 45% at 12% 8%, #ffdcbf 0, transparent 70%), radial-gradient(50% 40% at 92% 18%, #ffd0e2 0, transparent 70%), radial-gradient(60% 50% at 70% 100%, #c9e3ff 0, transparent 70%);
+  --surface:#ffffff; --surface-2:#f2f2f7; --field:#ffffff; --strip-bg:#ffffff;
+  --label:#000000; --label-2:#58585d; --sep:#d1d1d6; --control-border:#8a8a8f;
+  --accent:#0066cc; --accent-text:#0059b3; --accent-fill:#0066cc; --on-accent:#ffffff; --focus:#0066cc;
+  --sel-bg:rgb(0 102 204 / .12); --sel-fg:#004a99; --hover:rgb(0 0 0 / .05);
+  --user-bg:#0066cc; --user-fg:#ffffff;
+  --ok-fg:#1a6b2f; --ok-bg:#e3f5e8; --bad-fg:#b3001b; --bad-bg:#fde8ea; --warn-fg:#8a4600; --warn-bg:#fff1de;
+  --glass-bg:rgb(255 255 255 / .86); --glass-border:rgb(255 255 255 / .7); --glass-solid:#f9f9fb;
+  --glass-shadow:0 10px 30px rgb(0 0 0 / .12), inset 0 1px 0 rgb(255 255 255 / .6);
+  --bar-label:#000000; --bar-label-2:#48484a; --bar-sel-bg:rgb(0 102 204 / .14); --bar-sel-fg:#00468f; --bar-hover:rgb(0 0 0 / .06);
+  --r-bar:26px; --r-card:20px; --r-inner:14px; --r-row:18px; --side-w:304px;
+}
+@media (prefers-color-scheme: dark) { :root {
+  --bg:#000000;
+  --wash: radial-gradient(60% 45% at 12% 8%, #3b2415 0, transparent 70%), radial-gradient(50% 40% at 92% 18%, #2b1636 0, transparent 70%), radial-gradient(60% 50% at 70% 100%, #10263f 0, transparent 70%);
+  --surface:#1c1c1e; --surface-2:#2c2c2e; --field:#2c2c2e; --strip-bg:#1c1c1e;
+  --label:#ffffff; --label-2:#aeaeb2; --sep:#38383a; --control-border:#8e8e93;
+  --accent:#0a84ff; --accent-text:#64b0ff; --accent-fill:#0060d0; --focus:#64b0ff;
+  --sel-bg:rgb(10 132 255 / .24); --sel-fg:#b3d7ff; --hover:rgb(255 255 255 / .07);
+  --user-bg:#0060d0;
+  --ok-fg:#6be28a; --ok-bg:#12301b; --bad-fg:#ff8a80; --bad-bg:#3d1513; --warn-fg:#ffc266; --warn-bg:#3a2606;
+  --glass-bg:rgb(28 28 30 / .82); --glass-border:rgb(255 255 255 / .14); --glass-solid:#1c1c1e;
+  --glass-shadow:0 10px 30px rgb(0 0 0 / .5), inset 0 1px 0 rgb(255 255 255 / .09);
+  --bar-label:#ffffff; --bar-label-2:#d1d1d6; --bar-sel-bg:rgb(10 132 255 / .3); --bar-sel-fg:#c4e0ff; --bar-hover:rgb(255 255 255 / .09);
+} }
+body { background: var(--bg); }
+.glass { background: var(--glass-bg); -webkit-backdrop-filter: blur(22px) saturate(180%); backdrop-filter: blur(22px) saturate(180%); border: 1px solid var(--glass-border); box-shadow: var(--glass-shadow); }
+.sidebar { margin: 12px; border-radius: var(--r-bar); padding: 12px 8px; top: calc(var(--strip-h, 44px) + 12px) !important; height: calc(100dvh - var(--strip-h, 44px) - 24px) !important; }
+.toolbar { margin: 8px 12px 0; border-radius: var(--r-bar); top: calc(var(--strip-h, 44px) + 8px) !important; }
+.tabbar { border-radius: var(--r-bar); }
+.card { box-shadow: 0 1px 2px rgb(0 0 0 / .04); }
+.composer { background: linear-gradient(to top, var(--bg) 72%, transparent); }
+.content { padding-top: 20px; }
+@supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) { .glass { background: var(--glass-solid); } }
+
+@media (prefers-reduced-transparency: reduce) {
+  .glass { background: var(--glass-solid) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+}
+html.a11y-rt .glass { background: var(--glass-solid) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+
+@media (prefers-contrast: more) { :root { --label-2:#3a3a3c; --sep:#000; --control-border:#000; --accent-text:#0040dd; --sel-fg:#0040dd; --bar-label-2:#2c2c2e; --bar-sel-fg:#0040dd; --focus:#0040dd; --ok-fg:#0b5a1f; --bad-fg:#8a0014; --warn-fg:#6b3500; } .glass { background: var(--glass-solid) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border: 2px solid var(--label) !important; box-shadow: none !important; } }
+html.a11y-hc { --label-2:#3a3a3c; --sep:#000; --control-border:#000; --accent-text:#0040dd; --sel-fg:#0040dd; --bar-label-2:#2c2c2e; --bar-sel-fg:#0040dd; --focus:#0040dd; --ok-fg:#0b5a1f; --bad-fg:#8a0014; --warn-fg:#6b3500; }
+html.a11y-hc .glass { background: var(--glass-solid) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; border: 2px solid var(--label) !important; box-shadow: none !important; }
+@media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --label-2:#e5e5ea; --sep:#fff; --control-border:#fff; --accent-text:#8cc4ff; --sel-fg:#cfe6ff; --bar-label-2:#e5e5ea; --bar-sel-fg:#cfe6ff; --focus:#8cc4ff; --ok-fg:#9cf0b3; --bad-fg:#ffb3ad; --warn-fg:#ffd699; } }
+@media (prefers-color-scheme: dark) { html.a11y-hc { --label-2:#e5e5ea; --sep:#fff; --control-border:#fff; --accent-text:#8cc4ff; --sel-fg:#cfe6ff; --bar-label-2:#e5e5ea; --bar-sel-fg:#cfe6ff; --focus:#8cc4ff; --ok-fg:#9cf0b3; --bad-fg:#ffb3ad; --warn-fg:#ffd699; } }
+
+
+@media (forced-colors: active) {
+  body, .optstrip, .card, .toolbar, .sidebar, .composer, .tabbar, .figures, .partial, .notsent { background: Canvas; }
+  body *, .optstrip, .optstrip * { color: CanvasText !important; }
+  a, .optstrip a, .skip { color: LinkText !important; }
+  .btn, .btn *, .tab, .tab *, .send, .send * { color: ButtonText !important; }
+  input, textarea { background: Field; color: FieldText !important; }
+  .glass { background: Canvas !important; border: 1px solid CanvasText !important; box-shadow: none !important; }
+  .row[aria-current="true"], .tab[aria-current="page"] { outline: 2px solid Highlight; outline-offset: -2px; }
+  .row[aria-current="true"]::before { background: Highlight; }
+  .btn, .send, textarea, .search input { border: 1px solid ButtonText; }
+  .send { background: ButtonFace; color: ButtonText; }
+  .av { border: 1px solid CanvasText; background: Canvas; color: CanvasText; forced-color-adjust: none; }
+  .bubble { border: 1px solid CanvasText; background: Canvas; color: CanvasText; }
+  .chip { border: 1px solid CanvasText; background: Canvas; color: CanvasText; }
+  .card { border: 1px solid CanvasText; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; } }
+html.a11y-rm *, html.a11y-rm *::before, html.a11y-rm *::after { animation: none !important; transition: none !important; scroll-behavior: auto !important; }
+</style>
+</head>
+<body class="opt-a">
+<svg width="0" height="0" style="position:absolute" aria-hidden="true" focusable="false"><symbol id="i-users" viewBox="0 0 24 24"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><path d="M16 3.128a4 4 0 0 1 0 7.744"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><circle cx="9" cy="7" r="4"/></symbol><symbol id="i-contact" viewBox="0 0 24 24"><path d="M16 2v2"/><path d="M17.915 21a6 6 0 10-12 0"/><path d="M8 2v2"/><circle cx="12" cy="11" r="4"/><rect x="3" y="3" width="18" height="18" rx="2"/></symbol><symbol id="i-history" viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/><path d="M3 3v5h5"/><path d="M12 7v5l4 2"/></symbol><symbol id="i-search" viewBox="0 0 24 24"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></symbol><symbol id="i-info" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/></symbol><symbol id="i-up" viewBox="0 0 24 24"><path d="m5 12 7-7 7 7"/><path d="M12 19V5"/></symbol><symbol id="i-copy" viewBox="0 0 24 24"><rect width="14" height="14" x="8" y="8" rx="2" ry="2"/><path d="M4 16c-1.1 0-2-.9-2-2V4c0-1.1.9-2 2-2h10c1.1 0 2 .9 2 2"/></symbol><symbol id="i-refresh" viewBox="0 0 24 24"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></symbol><symbol id="i-alert" viewBox="0 0 24 24"><path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"/><path d="M12 9v4"/><path d="M12 17h.01"/></symbol><symbol id="i-check" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></symbol><symbol id="i-back" viewBox="0 0 24 24"><path d="m15 18-6-6 6-6"/></symbol><symbol id="i-chev" viewBox="0 0 24 24"><path d="m9 18 6-6-6-6"/></symbol></svg>
+<a class="skip" href="#q">Skip to question</a>
+<nav class="optstrip" aria-label="Design options">
+  <a href="index.html">Option A of 3 · All options</a>
+  <span class="optnote">Static preview: buttons don't call the API</span>
+</nav>
+
+<div class="shell">
+  <nav class="sidebar glass" aria-label="Experts">
+    <div class="brand"><strong>Experts21</strong><span>Miami specialty coffee shop team</span></div>
+    
+  <div class="search">
+    <label class="sr-only" for="s-q">Find an expert or topic</label>
+    <svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+    <input id="s-q" type="search" placeholder="Find an expert or topic" autocomplete="off" data-search="s" aria-controls="s-list">
+  </div>
+  <p class="sr-only" role="status" id="s-count"></p>
+    <ul class="rows pin">
+      <li><button type="button" class="row" data-go="team"><span class="av c-purple " aria-hidden="true">E</span><span class="wr"><span class="nm">Ask the whole team</span><span class="tt">Elena picks the right experts</span></span></button></li>
+    </ul>
+    <div class="group"><p class="group-label" id="s-recent">Recent</p><ul class="rows" aria-labelledby="s-recent"><li><button type="button" class="row recent" data-go="victor"><span class="av c-green " aria-hidden="true">V</span><span class="wr"><span class="nm">Victor</span><span class="tt">Is $72/sq ft too much for the 1,150 sq ft Brickell space?</span></span></button></li><li><button type="button" class="row recent" data-go="team"><span class="av c-purple " aria-hidden="true">E</span><span class="wr"><span class="nm">Whole team</span><span class="tt">We've been offered a 1,150 sq ft Brickell space at $72/sq ft + $19 NNN. Should we sign?</span></span></button></li></ul></div>
+    <div id="s-list">
+      <div class="group" data-group>
+        <p class="group-label" id="s-g0">Coordination</p>
+        <ul class="rows" aria-labelledby="s-g0">
+          <li data-kw="marcus engagement lead leadership engagement lead for the miami coffee shop project. use for the overall project plan, timeline, status, the decision log, and 'what should we do next'. for questions needing several experts, use the orchestrator instead."><button type="button" class="row" data-expert="engagement-lead"><span class="av c-purple " aria-hidden="true">M</span><span class="wr"><span class="nm">Marcus</span><span class="tt">Engagement Lead</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g1">Strategy &amp; market</p>
+        <ul class="rows" aria-labelledby="s-g1">
+          <li data-kw="isabel coffee business strategist business strategy specialty coffee business strategist. use for the concept, format (café vs. walk-up window vs. kiosk), positioning against miami competitors, revenue streams, and growth path."><button type="button" class="row" data-expert="coffee-business-strategist"><span class="av c-purple " aria-hidden="true">I</span><span class="wr"><span class="nm">Isabel</span><span class="tt">Coffee Business Strategist</span></span></button></li>
+          <li data-kw="dante competitive intelligence analyst market competitive intelligence analyst. use to map and compare competitors around a site or segment, benchmark prices, track new entrants in miami, and find market gaps."><button type="button" class="row" data-expert="competitive-intel-analyst"><span class="av c-blue " aria-hidden="true">D</span><span class="wr"><span class="nm">Dante</span><span class="tt">Competitive Intelligence Analyst</span></span></button></li>
+          <li data-kw="lourdes miami latin market &amp; culture advisor market miami latin market and culture advisor. use to check concept, menu, names, and messaging for cultural fit with miami's cuban and latin american communities, and for english/spanish copy."><button type="button" class="row" data-expert="latin-market-advisor"><span class="av c-orange " aria-hidden="true">L</span><span class="wr"><span class="nm">Lourdes</span><span class="tt">Miami Latin Market &amp; Culture Advisor</span></span></button></li>
+          <li data-kw="priya market &amp; customer research analyst market market and customer research analyst. use for market size, miami customer segments and demographics, trade-area analysis, surveys, and concept or price testing."><button type="button" class="row" data-expert="market-research-analyst"><span class="av c-blue " aria-hidden="true">P</span><span class="wr"><span class="nm">Priya</span><span class="tt">Market &amp; Customer Research Analyst</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g2">Real estate &amp; build-out</p>
+        <ul class="rows" aria-labelledby="s-g2">
+          <li data-kw="tomás café design &amp; build-out advisor technical / construction café design and build-out advisor. use for evaluating a space's construction needs, layout, build-out budget, contractor bids, and the construction and permit timeline."><button type="button" class="row" data-expert="buildout-design-advisor"><span class="av c-yellow " aria-hidden="true">T</span><span class="wr"><span class="nm">Tomás</span><span class="tt">Café Design &amp; Build-out Advisor</span></span></button></li>
+          <li data-kw="victor commercial real estate &amp; site selection advisor real estate commercial real estate and site selection advisor. use for finding and scoring miami locations, comparing rents and lease offers, and checking occupancy cost against projected sales."><button type="button" class="row" data-expert="real-estate-advisor"><span class="av c-green " aria-hidden="true">V</span><span class="wr"><span class="nm">Victor</span><span class="tt">Commercial Real Estate &amp; Site Selection Advisor</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g3">Legal &amp; compliance</p>
+        <ul class="rows" aria-labelledby="s-g3">
+          <li data-kw="eleanor business &amp; real estate attorney legal &amp; compliance business and real estate legal advisor (not a substitute for a licensed attorney). use for entity choice, lease and contract review, personal guarantees, trademarks, and florida employment-law questions."><button type="button" class="row" data-expert="business-attorney"><span class="av c-red " aria-hidden="true">E</span><span class="wr"><span class="nm">Eleanor</span><span class="tt">Business &amp; Real Estate Attorney</span></span></button></li>
+          <li data-kw="nadia food safety &amp; health compliance specialist legal &amp; compliance food safety and health compliance specialist. use for food handling rules, staff food safety certifications, temperature and cleaning logs, dbpr inspection readiness, and food safety after outages."><button type="button" class="row" data-expert="food-safety-specialist"><span class="av c-red " aria-hidden="true">N</span><span class="wr"><span class="nm">Nadia</span><span class="tt">Food Safety &amp; Health Compliance Specialist</span></span></button></li>
+          <li data-kw="gloria permitting &amp; licensing specialist legal &amp; compliance permitting and licensing specialist for florida and miami-dade. use for which licenses and permits a café needs at an address, their order, requirements, fees, and timelines."><button type="button" class="row" data-expert="permitting-specialist"><span class="av c-red " aria-hidden="true">G</span><span class="wr"><span class="nm">Gloria</span><span class="tt">Permitting &amp; Licensing Specialist</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g4">Finance &amp; risk</p>
+        <ul class="rows" aria-labelledby="s-g4">
+          <li data-kw="walter accounting &amp; tax advisor (cpa) finance accounting and tax advisor (not a substitute for a licensed cpa). use for bookkeeping setup, chart of accounts, florida sales tax, payroll and reemployment tax, filings calendar, and tax questions on structure."><button type="button" class="row" data-expert="accounting-tax-advisor"><span class="av c-green " aria-hidden="true">W</span><span class="wr"><span class="nm">Walter</span><span class="tt">Accounting &amp; Tax Advisor (CPA)</span></span></button></li>
+          <li data-kw="daniel financial modeling analyst (fp&amp;a) finance financial modeling analyst. use for the startup budget, monthly p&amp;l, cash flow, break-even, sensitivity and scenario analysis, and checking whether any plan is affordable."><button type="button" class="row" data-expert="financial-modeling-analyst"><span class="av c-green " aria-hidden="true">D</span><span class="wr"><span class="nm">Daniel</span><span class="tt">Financial Modeling Analyst (FP&amp;A)</span></span></button></li>
+          <li data-kw="grace funding &amp; capital advisor finance funding and capital advisor. use for how to pay for the café: sba loans, investors, equipment financing, landlord allowances, local grants, and the lender package."><button type="button" class="row" data-expert="funding-advisor"><span class="av c-green " aria-hidden="true">G</span><span class="wr"><span class="nm">Grace</span><span class="tt">Funding &amp; Capital Advisor</span></span></button></li>
+          <li data-kw="andrés insurance &amp; risk manager risk insurance and risk manager. use for insurance coverage and quotes, the project risk register, flood and hurricane exposure, and business-continuity plans."><button type="button" class="row" data-expert="insurance-risk-manager"><span class="av c-red " aria-hidden="true">A</span><span class="wr"><span class="nm">Andrés</span><span class="tt">Insurance &amp; Risk Manager</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g5">Coffee &amp; product</p>
+        <ul class="rows" aria-labelledby="s-g5">
+          <li data-kw="mateo head of coffee (sourcing &amp; roasting expert) coffee / product head of coffee: sourcing and roasting expert. use for choosing a roaster or blend, coffee quality standards, cupping, coffee price risk and contracts, and whether to roast in-house."><button type="button" class="row" data-expert="head-of-coffee"><span class="av c-orange " aria-hidden="true">M</span><span class="wr"><span class="nm">Mateo</span><span class="tt">Head of Coffee (Sourcing &amp; Roasting Expert)</span></span></button></li>
+          <li data-kw="camila menu &amp; beverage developer coffee / product menu and beverage developer. use for menu design, drink and food recipes, signature and seasonal drinks, recipe cards, menu pricing, and cost of goods."><button type="button" class="row" data-expert="menu-beverage-developer"><span class="av c-orange " aria-hidden="true">C</span><span class="wr"><span class="nm">Camila</span><span class="tt">Menu &amp; Beverage Developer</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g6">Operations &amp; people</p>
+        <ul class="rows" aria-labelledby="s-g6">
+          <li data-kw="jasmine hr &amp; talent advisor operations / people hr and talent advisor. use for team structure, pay and tip policy, job posts, interviews, onboarding, training plans, retention, and florida labor-rule compliance for staff."><button type="button" class="row" data-expert="hr-talent-advisor"><span class="av c-cyan " aria-hidden="true">J</span><span class="wr"><span class="nm">Jasmine</span><span class="tt">HR &amp; Talent Advisor</span></span></button></li>
+          <li data-kw="rosa café operations manager operations café operations manager. use for daily operations design: sops, checklists, inventory and ordering, staffing levels and schedules, service speed, and operating kpis."><button type="button" class="row" data-expert="operations-manager"><span class="av c-cyan " aria-hidden="true">R</span><span class="wr"><span class="nm">Rosa</span><span class="tt">Café Operations Manager</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g7">Technical</p>
+        <ul class="rows" aria-labelledby="s-g7">
+          <li data-kw="kenji coffee equipment &amp; bar engineering specialist technical coffee equipment and bar engineering specialist. use for choosing espresso machines, grinders, brewers, water filtration, ice machines, and refrigeration, comparing quotes, and maintenance plans."><button type="button" class="row" data-expert="equipment-specialist"><span class="av c-yellow " aria-hidden="true">K</span><span class="wr"><span class="nm">Kenji</span><span class="tt">Coffee Equipment &amp; Bar Engineering Specialist</span></span></button></li>
+          <li data-kw="leo restaurant technology &amp; data specialist technical restaurant technology and data specialist. use for choosing and connecting pos, payments, online ordering, loyalty, delivery, scheduling, payroll, and accounting tools, and for kpi dashboards."><button type="button" class="row" data-expert="restaurant-tech-specialist"><span class="av c-yellow " aria-hidden="true">L</span><span class="wr"><span class="nm">Leo</span><span class="tt">Restaurant Technology &amp; Data Specialist</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g8">Marketing</p>
+        <ul class="rows" aria-labelledby="s-g8">
+          <li data-kw="sofía brand &amp; creative director marketing brand and creative director. use for naming, brand story, visual identity, packaging, signage, interior look, and brand guidelines in english and spanish."><button type="button" class="row" data-expert="brand-creative-director"><span class="av c-pink " aria-hidden="true">S</span><span class="wr"><span class="nm">Sofía</span><span class="tt">Brand &amp; Creative Director</span></span></button></li>
+          <li data-kw="theo community, pr &amp; partnerships manager marketing community, pr, and partnerships manager. use for press outreach, press kits, influencer events, launch and community events, and local partnerships."><button type="button" class="row" data-expert="community-pr-manager"><span class="av c-pink " aria-hidden="true">T</span><span class="wr"><span class="nm">Theo</span><span class="tt">Community, PR &amp; Partnerships Manager</span></span></button></li>
+          <li data-kw="zoe digital &amp; social media marketer marketing digital and social media marketer. use for instagram and tiktok plans, google business profile, reviews, email/sms, loyalty campaigns, launch marketing, and marketing metrics."><button type="button" class="row" data-expert="digital-marketer"><span class="av c-pink " aria-hidden="true">Z</span><span class="wr"><span class="nm">Zoe</span><span class="tt">Digital &amp; Social Media Marketer</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g9">Design</p>
+        <ul class="rows" aria-labelledby="s-g9">
+          <li data-kw="sable apple-style ui designer (liquid glass) design apple-style ui designer (liquid glass, glassmorphism): owns visual design - glass materials, typography, color, light/dark mode, spacing, icons and motion. use for any visual design or restyling work."><button type="button" class="row" data-expert="ui-designer-apple-liquid-glass"><span class="av c-blue " aria-hidden="true">S</span><span class="wr"><span class="nm">Sable</span><span class="tt">Apple-Style UI Designer (Liquid Glass)</span></span></button></li>
+          <li data-kw="wren apple-style ux designer (human interface guidelines) design apple-style ux designer (human interface guidelines): owns navigation, user flows, clarity, microcopy, empty/loading/error states and accessibility. use for usability reviews, flows and accessibility audits."><button type="button" class="row" data-expert="ux-designer-apple-hig"><span class="av c-green " aria-hidden="true">W</span><span class="wr"><span class="nm">Wren</span><span class="tt">Apple-Style UX Designer (Human Interface Guidelines)</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="s-g10">Quality control &amp; team</p>
+        <ul class="rows" aria-labelledby="s-g10">
+          <li data-kw="ada agent &amp; skill builder (meta agent) team building meta agent that creates new expert agents and skills for this project and improves existing ones. use when the team needs a new expert or capability, or an agent or skill is giving poor results."><button type="button" class="row" data-expert="agent-builder"><span class="av c-cyan " aria-hidden="true">A</span><span class="wr"><span class="nm">Ada</span><span class="tt">Agent &amp; Skill Builder (Meta Agent)</span></span></button></li>
+          <li data-kw="frank independent reviewer (red team) quality control independent red-team reviewer. use before major decisions (leases, loans, hires, large spending) to stress-test a recommendation, find weak assumptions, and flag blind spots."><button type="button" class="row" data-expert="red-team-reviewer"><span class="av c-red " aria-hidden="true">F</span><span class="wr"><span class="nm">Frank</span><span class="tt">Independent Reviewer (Red Team)</span></span></button></li>
+        </ul>
+      </div><div class="nomatch" id="s-none" hidden><p>No expert matches “<span data-q></span>”. Try <b>Ask the whole team</b>. Elena will pick the right people.</p><button type="button" class="btn" data-go="team">Ask the whole team</button></div></div>
+  </nav>
+
+  <main class="main" id="main">
+    <div class="toolbar glass" id="toolbar">
+      <button type="button" class="btn back" id="back" hidden><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-back"/></svg><span>Experts</span></button>
+      <span id="tb-av"></span>
+      <div class="titles"><h1 id="h1">Ask the whole team</h1><p class="sub" id="sub">Elena picks the right experts, they answer side by side, Frank checks big decisions, and Elena combines it all.</p></div>
+      <button type="button" class="btn about-btn" id="about-btn" aria-expanded="false" aria-controls="about" hidden><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-info"/></svg><span id="about-label">About</span></button>
+    </div>
+    <p class="sr-only" role="status" id="status"></p>
+    <div class="content" id="content">
+      <div id="about-slot"></div>
+      
+  <section id="chat-team" class="chat" aria-label="Whole-team conversation">
+    <p class="preview-note">Sample run for design preview. Figures come from the landlord offer file and the research pack, and the wording is illustrative.</p>
+    <div class="msg user"><p class="who-u">You</p><div class="bubble">We've been offered a 1,150 sq ft Brickell space at $72/sq ft + $19 NNN with a full personal guarantee. Should we sign? What should we negotiate?</div></div>
+
+    <article class="msg card plan" aria-labelledby="plan-h">
+      <h2 class="who" id="plan-h"><span class="av c-purple " aria-hidden="true">E</span><span>Elena's plan</span></h2>
+      <p>Elena chose Victor, Daniel, and Eleanor <span class="dot" aria-hidden="true">·</span> 2 of 3 done <span class="dot" aria-hidden="true">·</span> Frank reviewed the result</p>
+    </article>
+
+    <div class="msg">
+      <details class="card ex" open>
+        <summary><h3><span class="av c-green sm" aria-hidden="true">V</span><span class="ex-name">Victor <span class="ex-role">Real estate</span></span></h3><span class="chip done"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Done</span></summary>
+        <p class="brief"><b>Elena asked Victor to:</b> work out what this rent does to occupancy cost and list what to ask the landlord for.</p>
+        <div class="prose"><p>All-in cost is $91/sq ft a year, about $8,721 a month in year 1, or 10.4% of $84K base-case monthly sales. The offer has a full-term personal guarantee, no exclusive, and 4% yearly increases. Ask for a capped guarantee, an exclusive, and more TI and free rent before the December 15, 2026 deadline.</p></div>
+      </details>
+      <details class="card ex" open>
+        <summary><h3><span class="av c-green sm" aria-hidden="true">D</span><span class="ex-name">Daniel <span class="ex-role">Finance</span></span></h3><span class="chip done"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Done</span></summary>
+        <p class="brief"><b>Elena asked Daniel to:</b> test the rent against break-even.</p>
+        <div class="prose"><p>The research pack's illustrative break-even is about $84.6K a month, or roughly 340 transactions a day at $8.25 (docs/05-operating-costs.md). A base case of $84K sits right at that line. That figure was built on different rent assumptions, so treat this as a warning and re-run the model with this lease. The assumption that matters most is daily transactions.</p></div>
+      </details>
+      <details class="card ex failed-card" open>
+        <summary><h3><span class="av c-red sm" aria-hidden="true">E</span><span class="ex-name">Eleanor <span class="ex-role">Legal</span></span></h3><span class="chip failed"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg>Couldn't answer</span></summary>
+        <p class="failmsg"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span><b>Eleanor couldn't answer. The other experts did.</b></span></p>
+        <button type="button" class="btn" data-retry><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg><span>Retry Eleanor</span></button>
+      </details>
+      <details class="card ex">
+        <summary><h3><span class="av c-red sm" aria-hidden="true">F</span><span class="ex-name">Frank <span class="ex-role">Red team</span></span></h3><span class="chip done"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-check"/></svg>Done</span></summary>
+        <p class="brief"><b>Elena asked Frank to:</b> stress-test the plan.</p>
+        <div class="prose"><p><b>Verdict: don't sign as written.</b> The plan only works if sales reach $84K a month early, and three free months may not cover the ramp-up. A full-term personal guarantee turns a business loss into a personal one. Conditions to sign: a capped guarantee, an exclusive, and a lawyer's review.</p></div>
+      </details>
+    </div>
+
+    <article class="msg card combined" aria-labelledby="comb-h">
+      <h2 class="who" id="comb-h"><span class="av c-purple " aria-hidden="true">E</span><span>Combined answer from Elena</span></h2>
+      <p class="partial" role="note"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span>This answer doesn't include Eleanor (legal). Retry Eleanor to add her view.</span></p>
+      <div class="prose">
+        <p><b>Don't sign the Brickell offer as written. Negotiate first.</b></p>
+        <ul>
+          <li>Rent is 10.4% of base-case sales ($8,721 a month against $84K), and the base case sits near break-even.</li>
+          <li>Ask for a capped personal guarantee, an exclusive-use clause, lower increases, and more TI and free rent.</li>
+          <li>The offer expires December 15, 2026. Ask for more time rather than rushing.</li>
+        </ul>
+        <p><b>Next steps:</b> counter the offer (you) · re-run break-even with this lease (Daniel) · have a Florida attorney review the guarantee (Eleanor, after retry).</p>
+        <p class="small">General information, not legal, tax, or financial advice.</p>
+      </div>
+      <div class="actions"><button type="button" class="btn" data-copy><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><span>Copy answer</span></button></div>
+    </article>
+  </section>
+      
+  <section id="chat-victor" class="chat" aria-label="Conversation with Victor" hidden>
+    <p class="preview-note">Sample conversation for design preview. Figures come from the landlord offer file and the research pack, and the wording is illustrative.</p>
+    <div class="msg user"><p class="who-u">You</p><div class="bubble">Is $72/sq ft too much for the 1,150 sq ft Brickell space? What should I ask the landlord for?</div></div>
+    <article class="msg card answer" aria-labelledby="vic-a">
+      <p class="who" id="vic-a"><span class="av c-green " aria-hidden="true">V</span><span>Victor</span></p>
+      <div class="prose">
+        <p><b>Don't sign it as written.</b> The rent is the main problem, and the guarantee makes it riskier.</p>
+        
+  <dl class="figures">
+    <dt>Base rent</dt><dd>$72 / sq ft / yr</dd>
+    <dt>NNN charges</dt><dd>$19 / sq ft / yr</dd>
+    <dt>All-in, 1,150 sq ft</dt><dd>$104,650 / yr</dd>
+    <dt>Per month, year 1</dt><dd>about $8,721</dd>
+    <dt>Share of base-case sales ($84K / mo)</dt><dd><b>10.4%</b></dd>
+  </dl>
+        <p><b>Ask for:</b></p>
+        <ol>
+          <li><b>Limit the personal guarantee.</b> The offer requires it for the full 7-year term. Ask for a cap or one that ends after a set period.</li>
+          <li><b>Add an exclusive-use clause.</b> None is offered, so another coffee tenant could open in the building.</li>
+          <li><b>Lower the 4% yearly increases</b>, or fix them for the first years.</li>
+          <li><b>Raise the tenant improvement allowance</b> ($25/sq ft now) and the free rent (3 months now).</li>
+          <li><b>Ask for more time.</b> The offer expires December 15, 2026. Don't let the date set your pace.</li>
+        </ol>
+        <p class="small">Source: sample landlord offer, 801 Brickell Ave, unit 104 (knowledge/real-estate-advisor/landlord-offer-brickell.md). Lease terms: have a Florida attorney review them before you sign. This is general information.</p>
+      </div>
+      <div class="actions"><button type="button" class="btn" data-copy><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-copy"/></svg><span>Copy answer</span></button></div>
+    </article>
+    <div class="msg user"><p class="who-u">You</p><div class="bubble">What would happen to the numbers if the landlord says no to the guarantee change?</div>
+      <p class="notsent" role="group" aria-label="Message not sent"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-alert"/></svg><span><b>Not sent.</b> Victor couldn't answer just now. The expert service is busy. Your question is still here.</span>
+      <button type="button" class="btn" data-retry><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-refresh"/></svg><span>Try again</span></button></p>
+    </div>
+  </section>
+      <section id="chat-dyn" class="chat" aria-label="Conversation" hidden></section>
+      
+  <section id="view-experts" class="chat" aria-label="Experts" hidden>
+    
+  <div class="search">
+    <label class="sr-only" for="m-q">Find an expert or topic</label>
+    <svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-search"/></svg>
+    <input id="m-q" type="search" placeholder="Find an expert or topic" autocomplete="off" data-search="m" aria-controls="m-list">
+  </div>
+  <p class="sr-only" role="status" id="m-count"></p>
+    <div class="list-card card" id="m-list">
+      <div class="group" data-group>
+        <p class="group-label" id="m-g0">Coordination</p>
+        <ul class="rows" aria-labelledby="m-g0">
+          <li data-kw="marcus engagement lead leadership engagement lead for the miami coffee shop project. use for the overall project plan, timeline, status, the decision log, and 'what should we do next'. for questions needing several experts, use the orchestrator instead."><button type="button" class="row" data-expert="engagement-lead"><span class="av c-purple " aria-hidden="true">M</span><span class="wr"><span class="nm">Marcus</span><span class="tt">Engagement Lead</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g1">Strategy &amp; market</p>
+        <ul class="rows" aria-labelledby="m-g1">
+          <li data-kw="isabel coffee business strategist business strategy specialty coffee business strategist. use for the concept, format (café vs. walk-up window vs. kiosk), positioning against miami competitors, revenue streams, and growth path."><button type="button" class="row" data-expert="coffee-business-strategist"><span class="av c-purple " aria-hidden="true">I</span><span class="wr"><span class="nm">Isabel</span><span class="tt">Coffee Business Strategist</span></span></button></li>
+          <li data-kw="dante competitive intelligence analyst market competitive intelligence analyst. use to map and compare competitors around a site or segment, benchmark prices, track new entrants in miami, and find market gaps."><button type="button" class="row" data-expert="competitive-intel-analyst"><span class="av c-blue " aria-hidden="true">D</span><span class="wr"><span class="nm">Dante</span><span class="tt">Competitive Intelligence Analyst</span></span></button></li>
+          <li data-kw="lourdes miami latin market &amp; culture advisor market miami latin market and culture advisor. use to check concept, menu, names, and messaging for cultural fit with miami's cuban and latin american communities, and for english/spanish copy."><button type="button" class="row" data-expert="latin-market-advisor"><span class="av c-orange " aria-hidden="true">L</span><span class="wr"><span class="nm">Lourdes</span><span class="tt">Miami Latin Market &amp; Culture Advisor</span></span></button></li>
+          <li data-kw="priya market &amp; customer research analyst market market and customer research analyst. use for market size, miami customer segments and demographics, trade-area analysis, surveys, and concept or price testing."><button type="button" class="row" data-expert="market-research-analyst"><span class="av c-blue " aria-hidden="true">P</span><span class="wr"><span class="nm">Priya</span><span class="tt">Market &amp; Customer Research Analyst</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g2">Real estate &amp; build-out</p>
+        <ul class="rows" aria-labelledby="m-g2">
+          <li data-kw="tomás café design &amp; build-out advisor technical / construction café design and build-out advisor. use for evaluating a space's construction needs, layout, build-out budget, contractor bids, and the construction and permit timeline."><button type="button" class="row" data-expert="buildout-design-advisor"><span class="av c-yellow " aria-hidden="true">T</span><span class="wr"><span class="nm">Tomás</span><span class="tt">Café Design &amp; Build-out Advisor</span></span></button></li>
+          <li data-kw="victor commercial real estate &amp; site selection advisor real estate commercial real estate and site selection advisor. use for finding and scoring miami locations, comparing rents and lease offers, and checking occupancy cost against projected sales."><button type="button" class="row" data-expert="real-estate-advisor"><span class="av c-green " aria-hidden="true">V</span><span class="wr"><span class="nm">Victor</span><span class="tt">Commercial Real Estate &amp; Site Selection Advisor</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g3">Legal &amp; compliance</p>
+        <ul class="rows" aria-labelledby="m-g3">
+          <li data-kw="eleanor business &amp; real estate attorney legal &amp; compliance business and real estate legal advisor (not a substitute for a licensed attorney). use for entity choice, lease and contract review, personal guarantees, trademarks, and florida employment-law questions."><button type="button" class="row" data-expert="business-attorney"><span class="av c-red " aria-hidden="true">E</span><span class="wr"><span class="nm">Eleanor</span><span class="tt">Business &amp; Real Estate Attorney</span></span></button></li>
+          <li data-kw="nadia food safety &amp; health compliance specialist legal &amp; compliance food safety and health compliance specialist. use for food handling rules, staff food safety certifications, temperature and cleaning logs, dbpr inspection readiness, and food safety after outages."><button type="button" class="row" data-expert="food-safety-specialist"><span class="av c-red " aria-hidden="true">N</span><span class="wr"><span class="nm">Nadia</span><span class="tt">Food Safety &amp; Health Compliance Specialist</span></span></button></li>
+          <li data-kw="gloria permitting &amp; licensing specialist legal &amp; compliance permitting and licensing specialist for florida and miami-dade. use for which licenses and permits a café needs at an address, their order, requirements, fees, and timelines."><button type="button" class="row" data-expert="permitting-specialist"><span class="av c-red " aria-hidden="true">G</span><span class="wr"><span class="nm">Gloria</span><span class="tt">Permitting &amp; Licensing Specialist</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g4">Finance &amp; risk</p>
+        <ul class="rows" aria-labelledby="m-g4">
+          <li data-kw="walter accounting &amp; tax advisor (cpa) finance accounting and tax advisor (not a substitute for a licensed cpa). use for bookkeeping setup, chart of accounts, florida sales tax, payroll and reemployment tax, filings calendar, and tax questions on structure."><button type="button" class="row" data-expert="accounting-tax-advisor"><span class="av c-green " aria-hidden="true">W</span><span class="wr"><span class="nm">Walter</span><span class="tt">Accounting &amp; Tax Advisor (CPA)</span></span></button></li>
+          <li data-kw="daniel financial modeling analyst (fp&amp;a) finance financial modeling analyst. use for the startup budget, monthly p&amp;l, cash flow, break-even, sensitivity and scenario analysis, and checking whether any plan is affordable."><button type="button" class="row" data-expert="financial-modeling-analyst"><span class="av c-green " aria-hidden="true">D</span><span class="wr"><span class="nm">Daniel</span><span class="tt">Financial Modeling Analyst (FP&amp;A)</span></span></button></li>
+          <li data-kw="grace funding &amp; capital advisor finance funding and capital advisor. use for how to pay for the café: sba loans, investors, equipment financing, landlord allowances, local grants, and the lender package."><button type="button" class="row" data-expert="funding-advisor"><span class="av c-green " aria-hidden="true">G</span><span class="wr"><span class="nm">Grace</span><span class="tt">Funding &amp; Capital Advisor</span></span></button></li>
+          <li data-kw="andrés insurance &amp; risk manager risk insurance and risk manager. use for insurance coverage and quotes, the project risk register, flood and hurricane exposure, and business-continuity plans."><button type="button" class="row" data-expert="insurance-risk-manager"><span class="av c-red " aria-hidden="true">A</span><span class="wr"><span class="nm">Andrés</span><span class="tt">Insurance &amp; Risk Manager</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g5">Coffee &amp; product</p>
+        <ul class="rows" aria-labelledby="m-g5">
+          <li data-kw="mateo head of coffee (sourcing &amp; roasting expert) coffee / product head of coffee: sourcing and roasting expert. use for choosing a roaster or blend, coffee quality standards, cupping, coffee price risk and contracts, and whether to roast in-house."><button type="button" class="row" data-expert="head-of-coffee"><span class="av c-orange " aria-hidden="true">M</span><span class="wr"><span class="nm">Mateo</span><span class="tt">Head of Coffee (Sourcing &amp; Roasting Expert)</span></span></button></li>
+          <li data-kw="camila menu &amp; beverage developer coffee / product menu and beverage developer. use for menu design, drink and food recipes, signature and seasonal drinks, recipe cards, menu pricing, and cost of goods."><button type="button" class="row" data-expert="menu-beverage-developer"><span class="av c-orange " aria-hidden="true">C</span><span class="wr"><span class="nm">Camila</span><span class="tt">Menu &amp; Beverage Developer</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g6">Operations &amp; people</p>
+        <ul class="rows" aria-labelledby="m-g6">
+          <li data-kw="jasmine hr &amp; talent advisor operations / people hr and talent advisor. use for team structure, pay and tip policy, job posts, interviews, onboarding, training plans, retention, and florida labor-rule compliance for staff."><button type="button" class="row" data-expert="hr-talent-advisor"><span class="av c-cyan " aria-hidden="true">J</span><span class="wr"><span class="nm">Jasmine</span><span class="tt">HR &amp; Talent Advisor</span></span></button></li>
+          <li data-kw="rosa café operations manager operations café operations manager. use for daily operations design: sops, checklists, inventory and ordering, staffing levels and schedules, service speed, and operating kpis."><button type="button" class="row" data-expert="operations-manager"><span class="av c-cyan " aria-hidden="true">R</span><span class="wr"><span class="nm">Rosa</span><span class="tt">Café Operations Manager</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g7">Technical</p>
+        <ul class="rows" aria-labelledby="m-g7">
+          <li data-kw="kenji coffee equipment &amp; bar engineering specialist technical coffee equipment and bar engineering specialist. use for choosing espresso machines, grinders, brewers, water filtration, ice machines, and refrigeration, comparing quotes, and maintenance plans."><button type="button" class="row" data-expert="equipment-specialist"><span class="av c-yellow " aria-hidden="true">K</span><span class="wr"><span class="nm">Kenji</span><span class="tt">Coffee Equipment &amp; Bar Engineering Specialist</span></span></button></li>
+          <li data-kw="leo restaurant technology &amp; data specialist technical restaurant technology and data specialist. use for choosing and connecting pos, payments, online ordering, loyalty, delivery, scheduling, payroll, and accounting tools, and for kpi dashboards."><button type="button" class="row" data-expert="restaurant-tech-specialist"><span class="av c-yellow " aria-hidden="true">L</span><span class="wr"><span class="nm">Leo</span><span class="tt">Restaurant Technology &amp; Data Specialist</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g8">Marketing</p>
+        <ul class="rows" aria-labelledby="m-g8">
+          <li data-kw="sofía brand &amp; creative director marketing brand and creative director. use for naming, brand story, visual identity, packaging, signage, interior look, and brand guidelines in english and spanish."><button type="button" class="row" data-expert="brand-creative-director"><span class="av c-pink " aria-hidden="true">S</span><span class="wr"><span class="nm">Sofía</span><span class="tt">Brand &amp; Creative Director</span></span></button></li>
+          <li data-kw="theo community, pr &amp; partnerships manager marketing community, pr, and partnerships manager. use for press outreach, press kits, influencer events, launch and community events, and local partnerships."><button type="button" class="row" data-expert="community-pr-manager"><span class="av c-pink " aria-hidden="true">T</span><span class="wr"><span class="nm">Theo</span><span class="tt">Community, PR &amp; Partnerships Manager</span></span></button></li>
+          <li data-kw="zoe digital &amp; social media marketer marketing digital and social media marketer. use for instagram and tiktok plans, google business profile, reviews, email/sms, loyalty campaigns, launch marketing, and marketing metrics."><button type="button" class="row" data-expert="digital-marketer"><span class="av c-pink " aria-hidden="true">Z</span><span class="wr"><span class="nm">Zoe</span><span class="tt">Digital &amp; Social Media Marketer</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g9">Design</p>
+        <ul class="rows" aria-labelledby="m-g9">
+          <li data-kw="sable apple-style ui designer (liquid glass) design apple-style ui designer (liquid glass, glassmorphism): owns visual design - glass materials, typography, color, light/dark mode, spacing, icons and motion. use for any visual design or restyling work."><button type="button" class="row" data-expert="ui-designer-apple-liquid-glass"><span class="av c-blue " aria-hidden="true">S</span><span class="wr"><span class="nm">Sable</span><span class="tt">Apple-Style UI Designer (Liquid Glass)</span></span></button></li>
+          <li data-kw="wren apple-style ux designer (human interface guidelines) design apple-style ux designer (human interface guidelines): owns navigation, user flows, clarity, microcopy, empty/loading/error states and accessibility. use for usability reviews, flows and accessibility audits."><button type="button" class="row" data-expert="ux-designer-apple-hig"><span class="av c-green " aria-hidden="true">W</span><span class="wr"><span class="nm">Wren</span><span class="tt">Apple-Style UX Designer (Human Interface Guidelines)</span></span></button></li>
+        </ul>
+      </div>
+      <div class="group" data-group>
+        <p class="group-label" id="m-g10">Quality control &amp; team</p>
+        <ul class="rows" aria-labelledby="m-g10">
+          <li data-kw="ada agent &amp; skill builder (meta agent) team building meta agent that creates new expert agents and skills for this project and improves existing ones. use when the team needs a new expert or capability, or an agent or skill is giving poor results."><button type="button" class="row" data-expert="agent-builder"><span class="av c-cyan " aria-hidden="true">A</span><span class="wr"><span class="nm">Ada</span><span class="tt">Agent &amp; Skill Builder (Meta Agent)</span></span></button></li>
+          <li data-kw="frank independent reviewer (red team) quality control independent red-team reviewer. use before major decisions (leases, loans, hires, large spending) to stress-test a recommendation, find weak assumptions, and flag blind spots."><button type="button" class="row" data-expert="red-team-reviewer"><span class="av c-red " aria-hidden="true">F</span><span class="wr"><span class="nm">Frank</span><span class="tt">Independent Reviewer (Red Team)</span></span></button></li>
+        </ul>
+      </div><div class="nomatch" id="m-none" hidden><p>No expert matches “<span data-q></span>”. Try <b>Ask the whole team</b>. Elena will pick the right people.</p><button type="button" class="btn" data-go="team">Ask the whole team</button></div></div>
+  </section>
+      
+  <section id="view-history" class="chat" aria-label="History" hidden>
+    <ul class="rows list-card card"><li><button type="button" class="row recent" data-go="victor"><span class="av c-green " aria-hidden="true">V</span><span class="wr"><span class="nm">Victor</span><span class="tt">Is $72/sq ft too much for the 1,150 sq ft Brickell space?</span></span></button></li><li><button type="button" class="row recent" data-go="team"><span class="av c-purple " aria-hidden="true">E</span><span class="wr"><span class="nm">Whole team</span><span class="tt">We've been offered a 1,150 sq ft Brickell space at $72/sq ft + $19 NNN. Should we sign?</span></span></button></li></ul>
+    <p class="small pad">Conversations are saved in this browser only. Don't use this on a shared computer if the questions are private.</p>
+  </section>
+    </div>
+    <p class="foot">General information, not legal, tax, or financial advice. Research dated November 2026.</p>
+    
+  <div class="composer" id="composer">
+    <form id="form" autocomplete="off" aria-label="Ask a question">
+      <label class="sr-only" for="q" id="q-label">Ask Elena</label>
+      <textarea id="q" rows="1" placeholder="Ask the whole team…" aria-describedby="q-hint"></textarea>
+      <button type="submit" class="send" aria-label="Send"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-up"/></svg></button>
+    </form>
+    <p class="hint" id="q-hint">Enter to send · Shift+Enter for a new line · Preview only, nothing is sent</p>
+  </div>
+  </main>
+</div>
+
+<nav class="tabbar glass" aria-label="Main">
+  <ul>
+    <li><button type="button" class="tab" data-tab="team" aria-current="page"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-users"/></svg><span>Team</span></button></li>
+    <li><button type="button" class="tab" data-tab="experts"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-contact"/></svg><span>Experts</span></button></li>
+    <li><button type="button" class="tab" data-tab="history"><svg class="i " viewBox="0 0 24 24" aria-hidden="true" focusable="false"><use href="#i-history"/></svg><span>History</span></button></li>
+  </ul>
+</nav>
+
+<script>window.EXPERTS = {"accounting-tax-advisor":{"persona":"Walter","title":"Accounting & Tax Advisor (CPA)","color":"green","voice":"Meticulous and calm; thinks in deadlines and accounts.","style":"Keeps a filings calendar, reconciles everything monthly, and flags what a licensed CPA must confirm.","model":"opus","knowledge":["README.md"]},"agent-builder":{"persona":"Ada","title":"Agent & Skill Builder (Meta Agent)","color":"cyan","voice":"Methodical and tidy architect of the team; explains changes file by file.","style":"Prefers improving to adding, makes the smallest change that fixes a problem, and always runs the validator.","model":"sonnet","knowledge":["README.md"]},"brand-creative-director":{"persona":"Sofía","title":"Brand & Creative Director","color":"pink","voice":"Bold visual storyteller; enthusiastic but decisive.","style":"Presents three options with a clear favorite and the reason, and checks every name's availability.","model":"sonnet","knowledge":["README.md"]},"buildout-design-advisor":{"persona":"Tomás","title":"Café Design & Build-out Advisor","color":"yellow","voice":"Practical and plain-spoken builder; walks through the space in his head before answering.","style":"Produces punch lists, separates landlord work from tenant work, and always adds contingency.","model":"sonnet","knowledge":["README.md"]},"business-attorney":{"persona":"Eleanor","title":"Business & Real Estate Attorney","color":"red","voice":"Careful, measured, and plain-English; explains what a clause means for the owner, not just what it says.","style":"Rates every issue red, yellow, or green, leads with the three changes that matter most, and always says when a licensed attorney must review.","model":"opus","knowledge":["README.md"]},"coffee-business-strategist":{"persona":"Isabel","title":"Coffee Business Strategist","color":"purple","voice":"Crisp and big-picture, but always tied back to evidence; asks 'why would anyone choose us?' early.","style":"Lays out two or three real options, scores them on upside, cost, and risk, and commits to one recommendation with phases.","model":"opus","knowledge":["README.md"]},"community-pr-manager":{"persona":"Theo","title":"Community, PR & Partnerships Manager","color":"pink","voice":"Friendly connector who seems to know everyone; short, warm messages.","style":"Builds lists, sends short personal pitches, follows up once, and tracks every contact.","model":"haiku","knowledge":["README.md"]},"competitive-intel-analyst":{"persona":"Dante","title":"Competitive Intelligence Analyst","color":"blue","voice":"Quick, sharp, and scout-like; reports what he saw and when he saw it.","style":"Works in tables, dates every observation, and flags new openings and closures first.","model":"haiku","knowledge":["README.md"]},"digital-marketer":{"persona":"Zoe","title":"Digital & Social Media Marketer","color":"pink","voice":"Upbeat and trend-aware, but every idea has a metric attached.","style":"Plans in calendars, tests small, and reports what actually drove visits.","model":"sonnet","knowledge":["README.md"]},"engagement-lead":{"persona":"Marcus","title":"Engagement Lead","color":"purple","voice":"Steady, organized, and reassuring; talks in owners, dates, and next steps.","style":"Starts every answer with what's blocking progress, keeps one living plan instead of new ones, and ends with a dated action list.","model":"sonnet","knowledge":["README.md"]},"equipment-specialist":{"persona":"Kenji","title":"Coffee Equipment & Bar Engineering Specialist","color":"yellow","voice":"Technical and spec-sheet driven; quietly obsessed with reliability.","style":"Sizes equipment to peak volume, compares five-year total cost, and checks who in Miami can fix it.","model":"sonnet","knowledge":["README.md"]},"financial-modeling-analyst":{"persona":"Daniel","title":"Financial Modeling Analyst (FP&A)","color":"green","voice":"Numbers-first with dry humor; shows the math and never hides an assumption.","style":"Builds models in code or spreadsheets, runs sensitivities on every key driver, and states the one assumption that matters most.","model":"opus","knowledge":["README.md"]},"food-safety-specialist":{"persona":"Nadia","title":"Food Safety & Health Compliance Specialist","color":"red","voice":"Firm, calm, and no-nonsense; 'when in doubt, throw it out.'","style":"Turns rules into checklists and logs, and runs mock inspections before the real one.","model":"sonnet","knowledge":["README.md"]},"funding-advisor":{"persona":"Grace","title":"Funding & Capital Advisor","color":"green","voice":"Reassuring but realistic, like a good small-business banker.","style":"Starts with sources and uses, tests debt against the worst case, and protects the cash reserve.","model":"opus","knowledge":["README.md"]},"head-of-coffee":{"persona":"Mateo","title":"Head of Coffee (Sourcing & Roasting Expert)","color":"orange","voice":"Passionate coffee nerd with sensory language, grounded in cupping scores and costs.","style":"Tastes before deciding, records every cupping, and checks what a price swing does to margin.","model":"sonnet","knowledge":["README.md"]},"hr-talent-advisor":{"persona":"Jasmine","title":"HR & Talent Advisor","color":"cyan","voice":"People-first, fair, and encouraging; believes great staff are the real product.","style":"Designs transparent pay and tip policies, structured interviews, and a clear growth path.","model":"sonnet","knowledge":["README.md"]},"insurance-risk-manager":{"persona":"Andrés","title":"Insurance & Risk Manager","color":"red","voice":"Calm hurricane-season veteran; prepared, not alarmed.","style":"Asks 'what could close us for a month?', maps coverage against each risk, and keeps the risk register current.","model":"opus","knowledge":["README.md"]},"latin-market-advisor":{"persona":"Lourdes","title":"Miami Latin Market & Culture Advisor","color":"orange","voice":"Warm, proud of Miami's Latin culture, and naturally bilingual; slips in a Spanish phrase where it fits.","style":"Tests every idea against two people — a Little Havana regular and a Gen Z Brickell resident — and rewrites copy rather than just critiquing it.","model":"sonnet","knowledge":["README.md"]},"market-research-analyst":{"persona":"Priya","title":"Market & Customer Research Analyst","color":"blue","voice":"Curious and evidence-first; says 'the data shows' and 'we don't know yet' with equal ease.","style":"Defines the trade area first, separates facts from guesses, and always reports sample sizes and data years.","model":"sonnet","knowledge":["README.md"]},"menu-beverage-developer":{"persona":"Camila","title":"Menu & Beverage Developer","color":"orange","voice":"Creative and playful, but every idea comes with a cost and a build time.","style":"Drafts, costs, tastes, and speed-tests each drink before it earns a spot on the menu.","model":"sonnet","knowledge":["README.md"]},"operations-manager":{"persona":"Rosa","title":"Café Operations Manager","color":"cyan","voice":"Brisk and practical, like a shift lead who's lived through a thousand 8 AM rushes.","style":"Asks what breaks first at peak, writes SOPs a day-three barista can follow, and tracks labor and waste weekly.","model":"sonnet","knowledge":["README.md"]},"orchestrator":{"persona":"Elena","title":"Expert Team Orchestrator","color":"purple","voice":"Calm, composed, and concise, like a conductor who lets each section play and then brings them together.","style":"Frames the question in one line, convenes the fewest experts needed, insists their numbers agree, and closes with one clear recommendation.","model":"opus","knowledge":["README.md"]},"permitting-specialist":{"persona":"Gloria","title":"Permitting & Licensing Specialist","color":"red","voice":"Precise, patient, and procedural; names the agency, the form, and the order every time.","style":"Starts with the jurisdiction, lays out approvals step by step, and keeps a tracker of what's filed, pending, and approved.","model":"sonnet","knowledge":["README.md"]},"real-estate-advisor":{"persona":"Victor","title":"Commercial Real Estate & Site Selection Advisor","color":"green","voice":"Deal-savvy and blunt about rent; never lets a pretty space distract from the numbers.","style":"Computes occupancy cost as a share of realistic sales before anything else, then lists exactly what to ask the landlord for.","model":"sonnet","knowledge":["README.md","landlord-offer-brickell.md"]},"red-team-reviewer":{"persona":"Frank","title":"Independent Reviewer (Red Team)","color":"red","voice":"Blunt, polite, and relentless skeptic; criticizes plans, never people.","style":"Restates the plan, hunts for the assumption that breaks it, and gives a clear verdict with conditions.","model":"opus","knowledge":["README.md"]},"restaurant-tech-specialist":{"persona":"Leo","title":"Restaurant Technology & Data Specialist","color":"yellow","voice":"Pragmatic techie, allergic to lock-in and hidden fees.","style":"Compares true monthly cost, insists on offline mode and data export, and draws how the tools connect.","model":"sonnet","knowledge":["README.md"]},"ui-designer-apple-liquid-glass":{"persona":"Sable","title":"Apple-Style UI Designer (Liquid Glass)","color":"blue","voice":"Calm, precise, and visual; talks in materials, layers, and contrast ratios, and shows rather than tells.","style":"Studies the reference examples first, builds real working HTML/CSS with the real content, then checks every surface in light, dark, increased contrast, and reduced transparency before showing anything.","model":"sonnet","knowledge":["README.md","docs/liquid-glass-materials-reference.md","docs/type-color-and-font-license-reference.md","examples/glass-legibility-good-vs-bad.html","examples/liquid-glass-tab-bar-and-sidebar.html","notes-official-sources.md"]},"ux-designer-apple-hig":{"persona":"Wren","title":"Apple-Style UX Designer (Human Interface Guidelines)","color":"green","voice":"Warm, plain-spoken, and user-first; asks \"what is the person trying to do right now?\" and never hides a problem behind jargon.","style":"Walks real tasks step by step, ranks problems by severity with evidence, and always pairs a problem with a specific, buildable fix and the exact words to use.","model":"opus","knowledge":["README.md","docs/accessibility-and-states-reference.md","docs/navigation-tab-bars-and-sidebars-reference.md","examples/sample-ranked-usability-review.md","examples/states-good-vs-bad.md","notes-official-sources.md"]}};
+window.MODEL_TEXT = {"opus":"Claude Opus: deeper and slower, costs more","sonnet":"Claude Sonnet: balanced speed and depth","haiku":"Claude Haiku: fastest, lowest cost"};</script>
+<script src="shared.js"></script>
+</body>
+</html>

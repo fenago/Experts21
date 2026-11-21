@@ -1,0 +1,5 @@
+{
+ "A": {"summary": "Passed: axe (WCAG 2.2 AA) zero violations in 100 runs (light, dark, increase contrast, reduced motion, forced colors, reduce-transparency and more-contrast switches; phone and desktop); every target at least 44x44px; works at 200% text; glass tint checked over white and black."},
+ "B": {"summary": "Passed: axe (WCAG 2.2 AA) zero violations in 100 runs (same modes as A); every target at least 44x44px; works at 200% text; glass only on the tab bar."},
+ "C": {"summary": "Passed: axe (WCAG 2.2 AA) zero violations in 100 runs (dark-only; also tested with light preference, increase contrast, reduced motion, forced colors, and the switches); every target at least 44x44px; works at 200% text."}
+}

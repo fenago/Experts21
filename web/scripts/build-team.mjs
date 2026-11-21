@@ -13,7 +13,13 @@ import matter from "gray-matter";
 const WEB = path.resolve(path.dirname(fileURLToPath(import.meta.url)), "..");
 const ROOT = path.resolve(WEB, "..");
 const read = (...p) => fs.readFileSync(path.join(ROOT, ...p), "utf8");
-const TEXT_EXT = new Set([".md", ".txt", ".csv", ".json"]);
+const TEXT_EXT = new Set([".md", ".txt", ".csv", ".json", ".html", ".css"]);
+// All files under a folder, recursively, as sorted relative paths (knowledge folders may have docs/ and examples/).
+const walk = (dir, base = dir) =>
+  fs.readdirSync(dir, { withFileTypes: true }).flatMap((e) => {
+    const full = path.join(dir, e.name);
+    return e.isDirectory() ? walk(full, base) : [path.relative(base, full).split(path.sep).join("/")];
+  }).sort();
 const RESEARCH = [
   "README.md", "01-market-overview.md", "02-target-customers.md", "03-competitors.md",
   "04-startup-costs.md", "05-operating-costs.md", "06-permits-and-licenses.md", "07-staffing.md",
@@ -51,7 +57,7 @@ for (const file of agentFiles) {
   });
 
   const kdir = path.join(ROOT, "knowledge", name);
-  const kfiles = fs.existsSync(kdir) ? fs.readdirSync(kdir).sort() : [];
+  const kfiles = fs.existsSync(kdir) ? walk(kdir) : [];
   const knowledge = kfiles.map((f) => {
     const rel = `knowledge/${name}/${f}`;
     return TEXT_EXT.has(path.extname(f).toLowerCase())

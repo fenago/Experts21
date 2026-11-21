@@ -1,0 +1,206 @@
+<!doctype html>
+<!--
+  WORKED EXAMPLE — Liquid Glass tab bar (phones) and sidebar (wide screens) on the web.
+  Study this before any glass work. Numbered notes [1]–[12] in the CSS match the
+  "Why it's built this way" list at the bottom of the page.
+
+  Sources: Apple HIG Materials, Tab bars, Sidebars, Accessibility; Adopting Liquid Glass;
+  MDN backdrop-filter, prefers-reduced-transparency, prefers-contrast, prefers-reduced-motion.
+  (Links and quotes: ../notes-official-sources.md)
+
+  Icons: Lucide (https://lucide.dev), ISC License, Copyright (c) 2026 Lucide Icons and Contributors.
+  No SF Symbols, no Apple logos, no SF Pro font files (system font stack only).
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<meta name="color-scheme" content="light dark">
+<title>Example: Liquid Glass tab bar and sidebar</title>
+<style>
+  /* [1] Tokens first: components only use these. Light, dark, and increased-contrast values. */
+  :root {
+    --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; /* [2] never @font-face SF Pro */
+    --bg: #f2f2f7; --card: #ffffff; --label: #000; --label-2: #6c6c70; --sep: #c6c6c8; --accent: #0066cc;
+    --glass-bg: rgb(255 255 255 / 0.72);           /* [3] regular glass, tinted enough to pass contrast on its own */
+    --glass-border: rgb(255 255 255 / 0.6);
+    --glass-shadow: 0 10px 30px rgb(0 0 0 / 0.12), inset 0 1px 0 rgb(255 255 255 / 0.55);
+    --glass-solid: #f9f9fb;                         /* fallback surface */
+    --selected-bg: rgb(0 102 204 / 0.12); --selected-fg: #0066cc;
+    --radius-bar: 26px; --pad-bar: 6px;             /* [4] concentric radii: inner = outer − padding */
+    --dur: 220ms;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #000; --card: #1c1c1e; --label: #fff; --label-2: #98989d; --sep: #38383a; --accent: #0a84ff;
+      --glass-bg: rgb(28 28 30 / 0.72); --glass-border: rgb(255 255 255 / 0.12);
+      --glass-shadow: 0 10px 30px rgb(0 0 0 / 0.5), inset 0 1px 0 rgb(255 255 255 / 0.08);
+      --glass-solid: #1c1c1e; --selected-bg: rgb(10 132 255 / 0.22);
+      --selected-fg: #5eb1ff;   /* accent text on an accent-tinted pill needs a lighter blue in dark mode (6:1 vs 3.8:1) */
+    }
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; font: 400 1.0625rem/1.45 var(--font); color: var(--label); background: var(--bg); } /* 17px body */
+
+  /* ---------- CONTENT LAYER: solid, never glass [5] ---------- */
+  .hero {                                  /* visually rich content that will scroll under the glass */
+    min-height: 260px; padding: 72px 24px 32px; color: #fff;
+    background: linear-gradient(rgb(0 0 0 / 0.5), rgb(0 0 0 / 0.5)),   /* scrim so white text on the "photo" passes 4.5:1 */
+                radial-gradient(circle at 20% 30%, #f6a04d, transparent 55%),
+                radial-gradient(circle at 80% 20%, #e0457b, transparent 50%),
+                linear-gradient(135deg, #6a3d1f, #2a1a12);
+  }
+  .hero h1 { margin: 0 0 8px; font-size: 2.125rem; line-height: 1.2; }
+  .hero p { margin: 0; max-width: 40ch; text-shadow: 0 1px 2px rgb(0 0 0 / .4); }
+  main { padding: 0 16px 140px; }           /* bottom padding so content can scroll clear of the tab bar */
+  .cards { display: grid; gap: 12px; max-width: 760px; margin: 8px auto 0; }
+  .card { background: var(--card); border-radius: 16px; padding: 16px; border: 1px solid var(--sep); }
+  .card h2 { margin: 0 0 4px; font-size: 1.0625rem; font-weight: 600; }
+  .card p { margin: 0; color: var(--label-2); font-size: 0.9375rem; }
+
+  /* ---------- NAVIGATION LAYER: Liquid Glass ---------- */
+  .glass {
+    background: var(--glass-bg);
+    -webkit-backdrop-filter: blur(20px) saturate(180%);   /* [6] prefix for older Safari */
+    backdrop-filter: blur(20px) saturate(180%);
+    border: 1px solid var(--glass-border);
+    box-shadow: var(--glass-shadow);
+  }
+  .nav-list { list-style: none; margin: 0; padding: 0; }
+  .nav-item {
+    display: flex; align-items: center; gap: 10px; min-height: 44px; min-width: 44px;   /* [7] 44px targets */
+    color: var(--label); text-decoration: none; border-radius: calc(var(--radius-bar) - var(--pad-bar));
+    transition: background-color var(--dur) ease;
+  }
+  .nav-item svg { width: 24px; height: 24px; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+  .nav-item[aria-current="page"] { color: var(--selected-fg); background: var(--selected-bg); font-weight: 600; } /* [8] not color alone: weight + pill */
+  .nav-item:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+  /* Phone: floating tab bar [9] */
+  .tabbar {
+    position: fixed; left: 50%; transform: translateX(-50%);
+    bottom: max(12px, env(safe-area-inset-bottom));
+    border-radius: var(--radius-bar); padding: var(--pad-bar); z-index: 10;
+  }
+  .tabbar .nav-list { display: flex; gap: 2px; }
+  .tabbar .nav-item { flex-direction: column; gap: 2px; padding: 6px 14px; font-size: 0.75rem; justify-content: center; }
+  .sidebar { display: none; }
+
+  /* Wide screens: the same destinations become a floating sidebar [10] */
+  @media (min-width: 900px) {
+    .tabbar { display: none; }
+    .sidebar {
+      display: block; position: fixed; top: 12px; bottom: 12px; left: 12px; width: 248px;
+      border-radius: var(--radius-bar); padding: 16px var(--pad-bar); z-index: 10; overflow-y: auto;
+    }
+    .sidebar .group { margin: 4px 12px 8px; font-size: 0.8125rem; font-weight: 600; color: var(--label-2); }
+    .sidebar .nav-item { padding: 0 12px; }
+    .hero, main { padding-left: 284px; }          /* content extends beneath, but readable area starts after the sidebar */
+  }
+
+  /* ---------- FALLBACKS [11] ---------- */
+  @supports not ((backdrop-filter: blur(1px)) or (-webkit-backdrop-filter: blur(1px))) {
+    .glass { background: var(--glass-solid); }
+  }
+  @media (prefers-reduced-transparency: reduce) {     /* experimental: Chrome/Edge 118+ */
+    .glass { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  }
+  html.sim-reduce-transparency .glass { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; }
+  @media (prefers-contrast: more) {
+    :root { --label-2: #3a3a3c; --accent: #0040dd; --selected-fg: #0040dd; --sep: #000; }
+    .glass { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; border: 2px solid var(--label); box-shadow: none; }
+    .nav-item[aria-current="page"] { outline: 2px solid currentColor; }
+  }
+  html.sim-more-contrast { --label-2: #3a3a3c; --accent: #0040dd; --selected-fg: #0040dd; --sep: #000; }
+  html.sim-more-contrast .glass { background: var(--glass-solid); -webkit-backdrop-filter: none; backdrop-filter: none; border: 2px solid var(--label); box-shadow: none; }
+  html.sim-more-contrast .nav-item[aria-current="page"] { outline: 2px solid currentColor; }
+  @media (prefers-contrast: more) and (prefers-color-scheme: dark) { :root { --label-2: #d1d1d6; --accent: #409cff; --selected-fg: #8cc4ff; --sep: #fff; } }
+  @media (forced-colors: active) {
+    .glass { background: Canvas; border: 1px solid CanvasText; }
+    .nav-item[aria-current="page"] { outline: 2px solid Highlight; }
+  }
+  @media (prefers-reduced-motion: reduce) { :root { --dur: 0ms; } }   /* [12] no animated selection or blur */
+
+  /* Demo controls (not part of the pattern) */
+  .demo { max-width: 760px; margin: 16px auto; display: flex; flex-wrap: wrap; gap: 8px; }
+  .demo button { min-height: 44px; padding: 0 14px; border-radius: 12px; border: 1px solid var(--sep); background: var(--card); color: var(--label); font: inherit; font-size: 0.9375rem; }
+  .demo button[aria-pressed="true"] { border-color: var(--accent); color: var(--accent); font-weight: 600; }
+  .notes { max-width: 760px; margin: 24px auto; }
+  .notes li { margin-bottom: 6px; }
+</style>
+</head>
+<body>
+  <!-- SVG sprite (Lucide, ISC) -->
+  <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+    <symbol id="i-coffee" viewBox="0 0 24 24"><path d="M10 2v2"/><path d="M14 2v2"/><path d="M16 8a1 1 0 0 1 1 1v8a4 4 0 0 1-4 4H7a4 4 0 0 1-4-4V9a1 1 0 0 1 1-1h14a4 4 0 1 1 0 8h-1"/><path d="M6 2v2"/></symbol>
+    <symbol id="i-clock" viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></symbol>
+    <symbol id="i-sparkles" viewBox="0 0 24 24"><path d="M11.017 2.814a1 1 0 0 1 1.966 0l1.051 5.558a2 2 0 0 0 1.594 1.594l5.558 1.051a1 1 0 0 1 0 1.966l-5.558 1.051a2 2 0 0 0-1.594 1.594l-1.051 5.558a1 1 0 0 1-1.966 0l-1.051-5.558a2 2 0 0 0-1.594-1.594l-5.558-1.051a1 1 0 0 1 0-1.966l5.558-1.051a2 2 0 0 0 1.594-1.594z"/><path d="M20 2v4"/><path d="M22 4h-4"/><circle cx="4" cy="20" r="2"/></symbol>
+    <symbol id="i-user" viewBox="0 0 24 24"><circle cx="12" cy="8" r="5"/><path d="M20 21a8 8 0 0 0-16 0"/></symbol>
+  </svg>
+
+  <!-- Sidebar (wide screens) and tab bar (phones): same destinations, names, order -->
+  <nav class="sidebar glass" aria-label="Main">
+    <div class="group" id="g1">Café</div>
+    <ul class="nav-list" aria-labelledby="g1">
+      <li><a class="nav-item" href="#menu" aria-current="page"><svg aria-hidden="true"><use href="#i-coffee"/></svg>Menu</a></li>
+      <li><a class="nav-item" href="#orders"><svg aria-hidden="true"><use href="#i-clock"/></svg>Orders</a></li>
+      <li><a class="nav-item" href="#rewards"><svg aria-hidden="true"><use href="#i-sparkles"/></svg>Rewards</a></li>
+      <li><a class="nav-item" href="#account"><svg aria-hidden="true"><use href="#i-user"/></svg>Account</a></li>
+    </ul>
+  </nav>
+  <nav class="tabbar glass" aria-label="Main">
+    <ul class="nav-list">
+      <li><a class="nav-item" href="#menu" aria-current="page"><svg aria-hidden="true"><use href="#i-coffee"/></svg>Menu</a></li>
+      <li><a class="nav-item" href="#orders"><svg aria-hidden="true"><use href="#i-clock"/></svg>Orders</a></li>
+      <li><a class="nav-item" href="#rewards"><svg aria-hidden="true"><use href="#i-sparkles"/></svg>Rewards</a></li>
+      <li><a class="nav-item" href="#account"><svg aria-hidden="true"><use href="#i-user"/></svg>Account</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <h1>Café menu</h1>
+    <p>Rich content like this photo-style header scrolls beneath the glass navigation — the glass blurs it; the content itself stays solid.</p>
+  </header>
+
+  <main id="menu">
+    <div class="demo" role="group" aria-label="Simulate accessibility settings">
+      <button type="button" aria-pressed="false" data-sim="sim-reduce-transparency">Simulate Reduce Transparency</button>
+      <button type="button" aria-pressed="false" data-sim="sim-more-contrast">Simulate Increase Contrast</button>
+    </div>
+    <div class="cards">
+      <article class="card"><h2>Cafecito</h2><p>Specialty-grade espresso, sweetened the Miami way.</p></article>
+      <article class="card"><h2>Cortadito</h2><p>Espresso with steamed milk in equal parts.</p></article>
+      <article class="card"><h2>Guava cold foam cold brew</h2><p>Seasonal signature drink.</p></article>
+      <article class="card"><h2>Pastelito de guayaba</h2><p>From our neighborhood bakery partner.</p></article>
+    </div>
+    <section class="notes">
+      <h2>Why it's built this way</h2>
+      <ol>
+        <li>Tokens hold every color, with light, dark, and increased-contrast values (HIG Color).</li>
+        <li>System font stack; SF Pro is never embedded (Apple's font license forbids website use).</li>
+        <li>Regular glass is tinted at 72% so black text passes 4.5:1 even over pure black content, ignoring blur.</li>
+        <li>Concentric corners: selected pill radius = bar radius − padding.</li>
+        <li>Content (hero, cards) is solid — "Don't use Liquid Glass in the content layer."</li>
+        <li><code>-webkit-backdrop-filter</code> for older Safari; glass needs a partly transparent background (MDN).</li>
+        <li>Every target is at least 44×44px (HIG: 44×44pt on iOS).</li>
+        <li>Selection = accent color + semibold + pill + <code>aria-current</code> — never color alone.</li>
+        <li>Phones: floating tab bar at the bottom, icon + one-word label, respects the safe area.</li>
+        <li>Wide screens: the same destinations become a sidebar ("Consider adapting your tab bar into a sidebar automatically").</li>
+        <li>Fallbacks: no backdrop-filter → solid; Reduce Transparency → solid; Increase Contrast → solid + 2px border + darker text; forced colors → system colors.</li>
+        <li>Reduce Motion: no animated selection or blur.</li>
+      </ol>
+    </section>
+  </main>
+  <script>
+    // Demo only: Playwright and most browsers can't emulate Reduce Transparency yet,
+    // so these buttons apply the same styles via classes for testing.
+    document.querySelectorAll("[data-sim]").forEach((b) =>
+      b.addEventListener("click", () => {
+        const on = document.documentElement.classList.toggle(b.dataset.sim);
+        b.setAttribute("aria-pressed", String(on));
+      })
+    );
+  </script>
+</body>
+</html>

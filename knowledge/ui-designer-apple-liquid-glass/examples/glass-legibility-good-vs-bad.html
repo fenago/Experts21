@@ -1,0 +1,111 @@
+<!doctype html>
+<!--
+  WORKED EXAMPLE — Glass legibility: good vs. bad, with a live legibility check.
+  Study this before putting any text or icon on glass.
+
+  The check (from .claude/skills/liquid-glass-web): composite the glass tint over the
+  worst-case backgrounds (pure white and pure black), ignore blur, and require 4.5:1 for
+  normal text (3:1 for large/bold text and icons) against BOTH.
+
+  Sources: Apple HIG Materials ("consider adding a dark dimming layer of 35% opacity";
+  "Don't use Liquid Glass in the content layer"), HIG Accessibility (4.5:1), MDN backdrop-filter.
+  The bad examples FAIL ON PURPOSE.
+-->
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="light">
+<title>Example: glass legibility, good vs. bad</title>
+<style>
+  body { margin: 0; font: 400 1.0625rem/1.45 -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Arial, sans-serif; color: #000; background: #f2f2f7; }
+  header, .explain { max-width: 1100px; margin: 0 auto; padding: 24px 16px 0; }
+  h1 { font-size: 1.75rem; margin: 0 0 8px; }
+  .grid { max-width: 1100px; margin: 0 auto; padding: 16px; display: grid; gap: 16px; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); }
+  figure { margin: 0; background: #fff; border: 1px solid #c6c6c8; border-radius: 16px; overflow: hidden; }
+  figcaption { padding: 12px 14px 14px; font-size: 0.9375rem; color: #3a3a3c; }
+  figcaption b { display: block; color: #000; margin-bottom: 2px; }
+  .verdict { display: inline-block; font-weight: 700; padding: 2px 8px; border-radius: 999px; font-size: 0.8125rem; margin-top: 6px; }
+  .pass { background: #d8f5dd; color: #0b5a1f; } .fail { background: #fde2e1; color: #8a0b05; }
+  /* A bright, busy "photo" — worst case for glass */
+  .stage { position: relative; height: 210px; padding: 14px;
+    background: radial-gradient(circle at 25% 35%, #fff6d6, transparent 45%), radial-gradient(circle at 75% 60%, #ffd1e3, transparent 50%), linear-gradient(120deg, #ffe9b0, #ffffff 45%, #c9ecff); }
+  .bar { position: absolute; left: 14px; right: 14px; bottom: 14px; display: flex; gap: 8px; align-items: center;
+    padding: 10px 14px; border-radius: 22px; -webkit-backdrop-filter: blur(16px) saturate(170%); backdrop-filter: blur(16px) saturate(170%); }
+  .bar span { font-weight: 600; }
+  .dim { position: relative; isolation: isolate; }
+  .dim::before { content: ""; position: absolute; inset: 0; border-radius: inherit; z-index: -1; background: var(--dim); }
+  /* The four cases */
+  .bad-clear  { background: rgb(255 255 255 / 0.12); color: #fff; }                                  /* clear glass, white text, bright bg, no dim */
+  .bad-dim35  { background: rgb(255 255 255 / 0.12); color: #fff; --dim: rgb(0 0 0 / 0.35); }        /* Apple's 35% dim alone isn't enough over WHITE */
+  .good-dim   { background: rgb(255 255 255 / 0.12); color: #fff; --dim: rgb(0 0 0 / 0.65); }        /* raised dim passes */
+  .good-reg   { background: rgb(255 255 255 / 0.72); color: #000; border: 1px solid rgb(255 255 255 / .6); } /* regular glass, dark text */
+  .bad-content { position: absolute; inset: 14px; padding: 12px; border-radius: 14px; background: rgb(255 255 255 / 0.25); color: #6c6c70;
+    -webkit-backdrop-filter: blur(10px); backdrop-filter: blur(10px); font-size: 0.875rem; }
+  .good-content { position: absolute; inset: 14px; padding: 12px; border-radius: 14px; background: #fff; color: #000; border: 1px solid #c6c6c8; font-size: 0.9375rem; }
+  .explain li { margin-bottom: 6px; }
+  code { background: #e5e5ea; padding: 0 4px; border-radius: 4px; }
+</style>
+</head>
+<body>
+<header>
+  <h1>Glass legibility: good vs. bad</h1>
+  <p>Same bright background in every panel. The verdicts are computed live: each glass tint is composited over white and black (blur ignored), and the text must reach 4.5:1 against both.</p>
+</header>
+<div class="grid">
+  <figure>
+    <div class="stage"><div class="bar bad-clear" data-check data-text="#ffffff" data-glass="rgba(255,255,255,0.12)"><span>Ask the team</span></div></div>
+    <figcaption><b>❌ Bad: clear glass, white text, no dim</b>Clear glass is for rich media, and over bright content the text vanishes. <span class="verdict"></span></figcaption>
+  </figure>
+  <figure>
+    <div class="stage"><div class="bar bad-dim35 dim" data-check data-text="#ffffff" data-glass="rgba(255,255,255,0.12)" data-dim="0.35"><span>Ask the team</span></div></div>
+    <figcaption><b>❌ Bad: clear glass + 35% dim over white</b>Apple's 35% dim is a starting point, not a guarantee: over pure white it gives ~2.4:1. Always run the check. <span class="verdict"></span></figcaption>
+  </figure>
+  <figure>
+    <div class="stage"><div class="bar good-dim dim" data-check data-text="#ffffff" data-glass="rgba(255,255,255,0.12)" data-dim="0.65"><span>Ask the team</span></div></div>
+    <figcaption><b>✅ Good: clear glass + dim raised to 65%</b>Still reads as glass, and white text passes over the brightest content. <span class="verdict"></span></figcaption>
+  </figure>
+  <figure>
+    <div class="stage"><div class="bar good-reg" data-check data-text="#000000" data-glass="rgba(255,255,255,0.72)"><span>Ask the team</span></div></div>
+    <figcaption><b>✅ Good: regular glass, dark text</b>The default for text-heavy controls (tab bars, sidebars). Passes over white and black. <span class="verdict"></span></figcaption>
+  </figure>
+  <figure>
+    <div class="stage"><div class="bad-content" data-check data-text="#6c6c70" data-glass="rgba(255,255,255,0.25)">Victor: At $72/sq ft + $19 NNN, rent is 10.4% of base-case sales — above the 10% guideline.</div></div>
+    <figcaption><b>❌ Bad: content on glass</b>A chat answer on frosted glass with gray text. "Don't use Liquid Glass in the content layer." <span class="verdict"></span></figcaption>
+  </figure>
+  <figure>
+    <div class="stage"><div class="good-content" data-check data-text="#000000" data-glass="rgba(255,255,255,1)">Victor: At $72/sq ft + $19 NNN, rent is 10.4% of base-case sales — above the 10% guideline.</div></div>
+    <figcaption><b>✅ Good: content stays solid</b>Answers sit on solid cards; glass is only for navigation and controls. <span class="verdict"></span></figcaption>
+  </figure>
+</div>
+<section class="explain">
+  <h2>The legibility check, step by step</h2>
+  <ol>
+    <li>Identify the worst-case backgrounds under the glass (usually pure white and pure black content scrolling beneath).</li>
+    <li>Composite the glass tint (and any dim layer) over each, ignoring blur.</li>
+    <li>Require 4.5:1 for normal text, 3:1 for large/bold text and icons, against both.</li>
+    <li>If it fails: raise the tint (regular), raise the dim (clear), switch to regular glass, or move the text off the glass.</li>
+    <li>Also verify the fallbacks: Reduce Transparency and Increase Contrast make the surface solid.</li>
+  </ol>
+</section>
+<script>
+  // Legibility check: composite glass (+dim) over white and black, compute WCAG contrast with the text color.
+  const rgb = (s) => { const m = s.match(/[\d.]+/g).map(Number); return { r: m[0], g: m[1], b: m[2], a: m[3] ?? 1 }; };
+  const hex = (h) => ({ r: parseInt(h.slice(1, 3), 16), g: parseInt(h.slice(3, 5), 16), b: parseInt(h.slice(5, 7), 16), a: 1 });
+  const over = (top, under) => ({ r: top.r * top.a + under.r * (1 - top.a), g: top.g * top.a + under.g * (1 - top.a), b: top.b * top.a + under.b * (1 - top.a), a: 1 });
+  const lum = (c) => { const f = (v) => { v /= 255; return v <= 0.03928 ? v / 12.92 : ((v + 0.055) / 1.055) ** 2.4; }; return 0.2126 * f(c.r) + 0.7152 * f(c.g) + 0.0722 * f(c.b); };
+  const ratio = (a, b) => { const [x, y] = [lum(a), lum(b)].sort((p, q) => q - p); return (x + 0.05) / (y + 0.05); };
+  document.querySelectorAll("[data-check]").forEach((el) => {
+    const glass = rgb(el.dataset.glass), text = hex(el.dataset.text), dim = parseFloat(el.dataset.dim || "0");
+    const worst = [{ r: 255, g: 255, b: 255, a: 1 }, { r: 0, g: 0, b: 0, a: 1 }].map((bg) => {
+      let base = dim ? over({ r: 0, g: 0, b: 0, a: dim }, bg) : bg;   // dim sits under the glass tint
+      return ratio(text, over(glass, base));
+    });
+    const min = Math.min(...worst);
+    const v = el.closest("figure").querySelector(".verdict");
+    v.textContent = `${min >= 4.5 ? "PASS" : "FAIL"} · worst case ${min.toFixed(1)}:1 (over white ${worst[0].toFixed(1)}, over black ${worst[1].toFixed(1)})`;
+    v.classList.add(min >= 4.5 ? "pass" : "fail");
+  });
+</script>
+</body>
+</html>

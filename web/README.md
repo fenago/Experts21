@@ -28,6 +28,10 @@ You need a Netlify account (free tier is fine), this repository on GitHub, and a
 
 **Updating the team:** every push to `main` redeploys automatically. The build re-reads `.claude/agents/`, `.claude/skills/`, `knowledge/`, and `docs/`, so a new knowledge document or an edited agent shows up after the next deploy.
 
+## Design option previews
+
+Static design previews by Sable (the UI designer) live in `public/options/` and are published with the site at **`/options/`** (for example `https://your-site.netlify.app/options/`). They don't call the API and don't change the live app.
+
 ## Optional environment variables
 
 | Variable | Default | What it does |

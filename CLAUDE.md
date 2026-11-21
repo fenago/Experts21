@@ -11,12 +11,13 @@ This project is a team of AI expert agents advising a consultant, working for Dr
 | `docs/how-to-talk-to-your-experts.md` | Example prompts for one expert or the whole team |
 | `docs/agent-brains.md` | Each agent's model (opus/sonnet/haiku), first name, voice, and working style |
 | `knowledge/<agent-name>/` | Each agent's own documents; the agent reads its folder before every answer |
+| `docs/ux-review.md` | Wren's ranked usability review of the web app |
 | `docs/decision-log.md` | Decisions made and pending. Check before advising; don't reopen settled decisions without new evidence |
-| `.claude/agents/` | 26 project subagents (24 experts + orchestrator + agent builder) |
-| `.claude/skills/` | 42 project skills (4 core + 38 specialist), preloaded into agents via each agent's `skills:` list |
+| `.claude/agents/` | 28 project subagents (26 experts + orchestrator + agent builder) |
+| `.claude/skills/` | 54 project skills (4 core + 50 specialist), preloaded into agents via each agent's `skills:` list |
 | `deliverables/` | Agent outputs (models, plans, checklists) saved by topic |
 | `scripts/validate_team.py` | Checks agents and skills are valid and wired correctly |
-| `web/`, `netlify.toml` | React chat app for the team (sidebar, per-expert chat, "Ask the whole team"); Claude calls run in Netlify Functions. See `web/README.md` |
+| `web/`, `netlify.toml` | React chat app for the team (sidebar, per-expert chat, "Ask the whole team"); Claude calls run in Netlify Functions. See `web/README.md`. Design previews (static) live in `web/public/options/` and are served at `/options/` |
 | `sdk/` | Node.js script that runs Victor (real-estate-advisor) with the Claude Agent SDK; see `sdk/README.md` |
 | `scripts/export_agent_skill.py`, `exports/` | Package an agent as a standalone Claude skill (.zip) for upload to a Claude account |
 
@@ -33,10 +34,11 @@ This project is a team of AI expert agents advising a consultant, working for Dr
 | Operations & people | `operations-manager`, `hr-talent-advisor` |
 | Technical | `equipment-specialist`, `restaurant-tech-specialist` |
 | Marketing | `brand-creative-director`, `digital-marketer`, `community-pr-manager` |
+| Design | `ui-designer-apple-liquid-glass` (Sable: visual design, Liquid Glass), `ux-designer-apple-hig` (Wren: flows, states, accessibility) |
 | Quality control | `red-team-reviewer` (stress-tests big decisions; read-only) |
 | Team building | `agent-builder` (creates and improves agents and skills) |
 
-Every agent has a first name and personality (Elena the orchestrator, Victor in real estate, Eleanor the attorney, Daniel in finance, Frank the red team…) and a model chosen for its work — see `docs/agent-brains.md`.
+Every agent has a first name and personality (Elena the orchestrator, Victor in real estate, Eleanor the attorney, Daniel in finance, Frank the red team, Sable and Wren in design…) and a model chosen for its work — see `docs/agent-brains.md`.
 
 Only the `orchestrator` can call other agents; experts return `HANDOFF → agent-name: question` lines instead.
 

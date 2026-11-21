@@ -78,13 +78,14 @@ def main(agent, export_name, description=None):
         skill_rows.append(f"| [`skills/{s}.md`](skills/{s}.md) | {localize(sfm['description'], agent).strip()} |")
 
     kdir = os.path.join(ROOT, "knowledge", agent)
-    kfiles = sorted(os.listdir(kdir))
+    kfiles = sorted(os.path.relpath(os.path.join(d, f), kdir) for d, _, fs in os.walk(kdir) for f in fs)
     for f in kfiles:
-        src = os.path.join(kdir, f)
+        src, dst = os.path.join(kdir, f), os.path.join(out, "knowledge", f)
+        os.makedirs(os.path.dirname(dst), exist_ok=True)
         if f.endswith((".md", ".txt")):
-            open(os.path.join(out, "knowledge", f), "w").write(localize(open(src).read(), agent))
+            open(dst, "w").write(localize(open(src).read(), agent))
         else:
-            shutil.copy2(src, os.path.join(out, "knowledge", f))
+            shutil.copy2(src, dst)
     for f in RESEARCH_FILES:
         open(os.path.join(out, "research", f), "w").write(localize(open(os.path.join(ROOT, "docs", f)).read(), agent))
 

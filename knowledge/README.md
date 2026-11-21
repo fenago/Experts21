@@ -1,6 +1,6 @@
 # Knowledge Folders
 
-Each agent has its own folder here: `knowledge/<agent-name>/`. The agent reads **every file in its folder before answering**, so this is how you give an expert project-specific documents — quotes, contracts, meeting notes, data exports, feedback.
+Each agent has its own folder here: `knowledge/<agent-name>/`. The agent reads **every file in its folder (including subfolders) before answering**, so this is how you give an expert project-specific documents — quotes, contracts, meeting notes, data exports, feedback.
 
 - Research for the whole team stays in `docs/`.
 - Outputs the agents produce go in `deliverables/`.
@@ -34,3 +34,5 @@ Each agent has its own folder here: `knowledge/<agent-name>/`. The agent reads *
 | [`community-pr-manager/`](community-pr-manager/README.md) | Theo, Community, PR & Partnerships Manager |
 | [`red-team-reviewer/`](red-team-reviewer/README.md) | Frank, Independent Reviewer (Red Team) |
 | [`agent-builder/`](agent-builder/README.md) | Ada, Agent & Skill Builder (Meta Agent) |
+| [`ui-designer-apple-liquid-glass/`](ui-designer-apple-liquid-glass/README.md) | Sable, Apple-Style UI Designer (Liquid Glass) — includes `docs/` and `examples/` |
+| [`ux-designer-apple-hig/`](ux-designer-apple-hig/README.md) | Wren, Apple-Style UX Designer (Human Interface Guidelines) — includes `docs/` and `examples/` |

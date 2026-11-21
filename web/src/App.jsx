@@ -16,6 +16,7 @@ const GROUPS = [
   ["Operations & people", ["Operations", "Operations / people"]],
   ["Technical", ["Technical"]],
   ["Marketing", ["Marketing"]],
+  ["Design", ["Design"]],
   ["Quality control & team", ["Quality control", "Team building"]],
 ];
 const TEAM_ID = "__team__";

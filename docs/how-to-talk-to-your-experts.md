@@ -127,6 +127,18 @@ Experts stay in their own area. If your question touches another area, they add 
 
 ---
 
+### Design experts
+
+```
+@agent-ux-designer-apple-hig Review the web app's "Ask the whole team" flow on a phone. What would you fix first?
+```
+
+```
+@agent-ui-designer-apple-liquid-glass Restyle the sidebar in the Liquid Glass style as a preview page under web/public/options/ — don't touch the live app.
+```
+
+Wren (UX) owns flows, states, microcopy, and accessibility; Sable (UI) owns the look: glass, type, color, dark mode, icons.
+
 ## 4. Give an expert your documents
 
 Each agent has a folder, `knowledge/<agent-name>/`, that it reads before every answer. Drop in quotes, contracts, notes, or data exports, then ask as usual:

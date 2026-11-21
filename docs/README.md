@@ -22,6 +22,7 @@
 | — | [decision-log.md](decision-log.md) | Decisions made and pending | All agents |
 | — | [agent-brains.md](agent-brains.md) | Each agent's model, first name, voice, and working style | You, agent builder |
 | — | [how-to-talk-to-your-experts.md](how-to-talk-to-your-experts.md) | Example prompts: ask one expert or the whole team | You |
+| — | [ux-review.md](ux-review.md) | Wren's ranked usability review of the web app | You, designers |
 
 ## The short version
 

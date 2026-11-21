@@ -22,6 +22,8 @@ description: "Decide which experts on this team should answer a question, in wha
 | Insurance, hurricanes, risk | insurance-risk-manager, business-attorney, financial-modeling-analyst |
 | Taxes, books | accounting-tax-advisor, financial-modeling-analyst |
 | Plan, timeline, status | engagement-lead, permitting-specialist, buildout-design-advisor |
+| The app's or website's look, restyling, design options | ui-designer-apple-liquid-glass, ux-designer-apple-hig |
+| Usability, flows, navigation, error/empty states, accessibility | ux-designer-apple-hig, ui-designer-apple-liquid-glass |
 
 ## Rules
 
@@ -64,4 +66,6 @@ Each expert starts with no memory of this conversation. Give: the consultant's q
 | `digital-marketer` | Instagram, TikTok, Google profile, email/SMS, loyalty campaigns |
 | `community-pr-manager` | Press, influencers, events, local partnerships |
 | `red-team-reviewer` | Stress-testing any recommendation before a decision |
+| `ui-designer-apple-liquid-glass` | Visual design of the app or café brand: Liquid Glass materials, type, color, dark mode, icons, motion; design options |
+| `ux-designer-apple-hig` | Usability reviews, navigation and flows, empty/loading/error states and microcopy, accessibility audits |
 | `agent-builder` | Creating or improving agents and skills on this team |

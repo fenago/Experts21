@@ -50,4 +50,6 @@ The orchestrator or engagement lead routes these. Do not call other agents yours
 | `digital-marketer` | Instagram, TikTok, Google profile, email/SMS, loyalty campaigns |
 | `community-pr-manager` | Press, influencers, events, local partnerships |
 | `red-team-reviewer` | Stress-testing any recommendation before a decision |
+| `ui-designer-apple-liquid-glass` | Visual design of the app or café brand: Liquid Glass materials, type, color, dark mode, icons, motion; design options |
+| `ux-designer-apple-hig` | Usability reviews, navigation and flows, empty/loading/error states and microcopy, accessibility audits |
 | `agent-builder` | Creating or improving agents and skills on this team |

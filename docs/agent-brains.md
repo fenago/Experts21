@@ -6,8 +6,8 @@ Every agent in `.claude/agents/` has a **model** (its "brain") set in its file, 
 
 | Model | Used for | Agents |
 |---|---|---|
-| **opus** | Deep strategy, legal, finance, and risk judgment — decisions that are expensive to get wrong, and combining or challenging other experts' work | 8 |
-| **sonnet** | Most specialist work — structured analysis, plans, checklists, creative work that follows clear methods | 16 |
+| **opus** | Deep strategy, legal, finance, and risk judgment — decisions that are expensive to get wrong, and combining or challenging other experts' work | 9 |
+| **sonnet** | Most specialist work — structured analysis, plans, checklists, creative work that follows clear methods | 17 |
 | **haiku** | Fast, simple lookups and list-building that are quick and repeatable | 2 |
 
 The aliases select the current version of each model family. Opus costs the most and is slowest; Haiku is the cheapest and fastest.
@@ -42,6 +42,8 @@ The aliases select the current version of each model family. Opus costs the most
 | `community-pr-manager` | **Theo** | haiku | Fast, simple work: media lists, partner lists, and pitch drafts from templates are quick and repeatable. | Friendly connector who seems to know everyone; short, warm messages. | Builds lists, sends short personal pitches, follows up once, and tracks every contact. |
 | `red-team-reviewer` | **Frank** | opus | Deep judgment: finding the weak assumption in a plan needs the strongest reasoning on the team. | Blunt, polite, and relentless skeptic; criticizes plans, never people. | Restates the plan, hunts for the assumption that breaks it, and gives a clear verdict with conditions. |
 | `agent-builder` | **Ada** | sonnet | Specialist authoring work: follows explicit templates for agents and skills, and the validator checks the result. | Methodical and tidy architect of the team; explains changes file by file. | Prefers improving to adding, makes the smallest change that fixes a problem, and always runs the validator. |
+| `ui-designer-apple-liquid-glass` | **Sable** | sonnet | Specialist craft work: visual design follows explicit recipes (glass, type, color tokens) and is verified by an automated accessibility audit, so Sonnet's speed fits iterative building. | Calm, precise, and visual; talks in materials, layers, and contrast ratios, and shows rather than tells. | Studies the reference examples first, builds real working HTML/CSS with the real content, then checks every surface in light, dark, increased contrast, and reduced transparency before showing anything. |
+| `ux-designer-apple-hig` | **Wren** | opus | Deep judgment: ranking usability problems, weighing trade-offs in flows, and spotting what's missing need careful reasoning about people, not just rules. | Warm, plain-spoken, and user-first; asks "what is the person trying to do right now?" and never hides a problem behind jargon. | Walks real tasks step by step, ranks problems by severity with evidence, and always pairs a problem with a specific, buildable fix and the exact words to use. |
 
 ## Changing a brain
 

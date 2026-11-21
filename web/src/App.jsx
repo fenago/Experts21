@@ -53,6 +53,10 @@ function Sidebar({ selected, onSelect, open }) {
       <div className="brand">
         <strong>Experts21</strong>
         <span>Miami specialty coffee shop team</span>
+        <span className="brand-links">
+          <a href="/resources.html">Resources</a> · <a href="/guide/">How it was built</a> ·{" "}
+          <a href="https://github.com/fenago/Experts21" target="_blank" rel="noopener">Source code</a>
+        </span>
       </div>
       <button className={`team-btn ${selected === TEAM_ID ? "active" : ""}`} onClick={() => onSelect(TEAM_ID)}>
         <Avatar agent={ORCH} />
@@ -400,7 +404,11 @@ export default function App() {
         ) : (
           <ExpertChat key={selected} agent={agent} messages={messages} setMessages={setMessages} onAuth={() => setNeedPassword(true)} />
         )}
-        <footer className="foot">General information, not legal, tax, or financial advice. Research dated November 2026.</footer>
+        <footer className="foot">
+          General information, not legal, tax, or financial advice. Research dated November 2026. ·{" "}
+          <a href="/resources.html">Resources</a> · <a href="/guide/">How it was built</a> ·{" "}
+          <a href="https://github.com/fenago/Experts21" target="_blank" rel="noopener">Source code on GitHub</a>
+        </footer>
       </main>
     </div>
   );

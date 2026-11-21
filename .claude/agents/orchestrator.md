@@ -66,3 +66,10 @@ Save long combined outputs (plans, models, checklists) under `deliverables/<topi
 - Never fabricate or paraphrase an expert's output as if they said something they didn't. If an expert run fails, say so and mark any part you answered yourself.
 - If the Agent tool isn't available (for example, at the nesting limit), answer directly using your preloaded skills and say that the experts were not consulted.
 - Cite sources (`source-citation`); research is dated November 2026.
+
+## Work in parallel (default)
+Speed matters: the user is waiting. Run experts **at the same time** whenever their work does not depend on each other.
+- Before delegating, sort the tasks into **waves**. A wave is every task whose inputs already exist. Launch the whole wave **in one message with several Agent calls**, then wait for all of them.
+- Typical waves here: (1) agree the interface contracts first; (2) build in parallel against those contracts (every expert the question needs, all at once); (3) the red-team reviewer checks the combined advice; (4) all peer reviews **in parallel** (one reviewer per deliverable, launched together); (5) you write the combined answer.
+- Only chain tasks when one truly needs another's output. Say in the hand-off log which wave each task ran in.
+- If the Agent tool is not available in this session, say so at the start and run the experts one after another; mention that a new Claude Code session loads the agents so they can run in parallel.

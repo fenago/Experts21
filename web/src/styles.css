@@ -142,3 +142,64 @@ button, textarea, input { font: inherit; color: inherit; }
   .chat-head { padding-top: 48px; }
   .foot { padding: 0 16px 10px; }
 }
+
+/* ---------- Voice (Deepgram) controls ---------- */
+.icon { width: 20px; height: 20px; flex: none; stroke: currentColor; fill: none; stroke-width: 2; stroke-linecap: round; stroke-linejoin: round; }
+:focus-visible { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.composer .mic {
+  flex: none; align-self: flex-end; display: grid; place-items: center;
+  width: 48px; height: 48px; padding: 0; border-radius: 50%;
+  background: var(--bg); color: var(--text); border: 1px solid var(--muted);
+}
+.composer .mic:hover { background: var(--accent-soft); }
+.composer .mic.recording { background: var(--error); border-color: var(--error); color: #fff; animation: mic-pulse 1.4s ease-out infinite; }
+.composer .mic.voice-off { border-style: dashed; }
+.composer .mic[aria-disabled="true"], .composer .mic:disabled { cursor: default; opacity: 1; }
+@keyframes mic-pulse { 0% { box-shadow: 0 0 0 0 color-mix(in srgb, var(--error) 45%, transparent); } 100% { box-shadow: 0 0 0 12px transparent; } }
+.voice-status { min-height: 1.4em; margin: 0; padding: 0 24px 6px; font-size: 14px; color: var(--muted); }
+.voice-status.is-error { color: var(--error); }
+
+.speak, .stop-speaking, .pill {
+  display: inline-flex; align-items: center; gap: 6px; min-height: 44px; padding: 0 14px;
+  border-radius: 999px; border: 1px solid var(--line); background: var(--panel); color: var(--text);
+  font-size: 14px; font-weight: 600; cursor: pointer;
+}
+.speak { margin-top: 8px; }
+.speak:hover, .pill:hover, .stop-speaking:hover { background: var(--accent-soft); }
+.speak.active, .stop-speaking { border-color: var(--accent); color: var(--accent); }
+.final .speak { margin-top: 10px; }
+
+.voice-bar { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin-top: 6px; font-size: 14px; }
+.voice-note { color: var(--muted); }
+.voice-error { color: var(--error); }
+.link {
+  display: inline-flex; align-items: center; justify-content: center; min-height: 44px; min-width: 44px; padding: 0 4px; border: none; background: none;
+  color: var(--accent); font: inherit; font-weight: 600; text-decoration: underline; cursor: pointer;
+}
+
+.switch { position: relative; display: inline-flex; align-items: center; gap: 10px; min-height: 44px; cursor: pointer; font-weight: 600; }
+.switch input { position: absolute; opacity: 0; width: 1px; height: 1px; }
+.switch .track { position: relative; width: 44px; height: 26px; border-radius: 13px; background: var(--bg); border: 1px solid var(--muted); transition: background-color .2s; }
+.switch .thumb { position: absolute; top: 2px; left: 2px; width: 20px; height: 20px; border-radius: 50%; background: var(--muted); transition: transform .2s, background-color .2s; }
+.switch input:checked + .track { background: var(--accent); border-color: var(--accent); }
+.switch input:checked + .track .thumb { transform: translateX(18px); background: #fff; }
+.switch input:focus-visible + .track { outline: 3px solid var(--accent); outline-offset: 2px; }
+
+.voice-persona p { margin: 4px 0 0; }
+.voice-picker { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 6px; }
+.voice-picker label { width: 100%; font-size: 14px; font-weight: 600; }
+.voice-picker select {
+  min-height: 44px; max-width: 100%; padding: 0 10px; border-radius: 10px;
+  border: 1px solid var(--muted); background: var(--bg); color: var(--text); font: inherit; font-size: 15px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .composer .mic.recording { animation: none; outline: 3px solid var(--error); outline-offset: 2px; }
+  .switch .track, .switch .thumb { transition: none; }
+}
+@media (forced-colors: active) {
+  .switch .track { border-color: CanvasText; }
+  .switch input:checked + .track { background: Highlight; }
+  .composer .mic.recording { background: Highlight; color: HighlightText; }
+}

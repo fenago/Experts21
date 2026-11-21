@@ -18,15 +18,38 @@ You need a Netlify account (free tier is fine), this repository on GitHub, and a
    - Key: `ANTHROPIC_API_KEY`
    - Value: your key (starts with `sk-ant-`)
    - Mark it as a **secret** if offered, and make sure the **Functions** scope is included.
-4. **(Strongly recommended) Add a password.** Anyone with the site URL could otherwise spend your API credits. Add a second variable:
+4. **(Optional) Turn on voice.** Create a key in the Deepgram Console (https://console.deepgram.com → API Keys) and add it as another variable:
+   - Key: `DEEPGRAM_API_KEY`
+   - Value: your Deepgram key
+   - Mark it as a **secret**, with the **Functions** scope.
+
+   Without it, everything works by text and the app shows "Voice isn't set up yet."
+5. **(Strongly recommended) Add a password.** Anyone with the site URL could otherwise spend your API credits. Add a second variable:
    - Key: `APP_PASSWORD`
    - Value: a password you choose
 
    The app will ask for it once per browser session.
-5. **Deploy.** Click **Deploy**. The build takes about a minute. Then open the site URL Netlify gives you, such as `https://your-site.netlify.app`.
-6. **If you added or changed variables after deploying**, go to **Deploys → Trigger deploy → Deploy site** so the functions pick them up.
+6. **Deploy.** Click **Deploy**. The build takes about a minute. Then open the site URL Netlify gives you, such as `https://your-site.netlify.app`.
+7. **If you added or changed variables after deploying**, go to **Deploys → Trigger deploy → Deploy site** so the functions pick them up.
 
 **Updating the team:** every push to `main` redeploys automatically. The build re-reads `.claude/agents/`, `.claude/skills/`, `knowledge/`, and `docs/`, so a new knowledge document or an edited agent shows up after the next deploy.
+
+## Voice: talk to your experts (Deepgram)
+
+- **Talk:** press the microphone next to the chat box and ask your question. Press it again, or just pause for about 1.5 seconds, to send. The browser records with MediaRecorder; `/api/transcribe` sends the audio to Deepgram **nova-3** and your words are sent as the question.
+- **Listen:** every answer has a **Listen** button, and the **Read answers aloud** switch reads each new answer automatically (in the whole-team view, Elena's combined answer). Long answers are split into chunks under Deepgram's 2,000-character limit and played in order. **Stop speaking** stops playback.
+- **Voices:** each expert has a default Deepgram **Aura-2** English voice that fits their personality (e.g. Elena = Athena, calm and professional; Victor = Saturn, confident). Click **Change voice** in the expert's card to pick any of the 41 Aura-2 English voices, with **Preview**. Your choices are remembered in this browser.
+- **Without a Deepgram key** the app works by text as before and shows "Voice isn't set up yet."
+
+| Function | What it does |
+|---|---|
+| `netlify/functions/transcribe.mjs` → `/api/transcribe` | Audio → Deepgram `/v1/listen?model=nova-3&smart_format=true` → `{ transcript }` |
+| `netlify/functions/speak.mjs` → `/api/speak` | `{ text, voice }` → Deepgram `/v1/speak?model=aura-2-…-en` → MP3 |
+| `netlify/functions/voice-status.mjs` → `/api/voice` | `{ enabled }`: whether `DEEPGRAM_API_KEY` is set (never the key) |
+| `shared/voices.mjs` | The Aura-2 English voice list and each expert's default voice |
+| `src/voice.js`, `src/VoiceControls.jsx` | Recording, chunked playback, voice picker, read-aloud switch |
+
+The Deepgram key is read only on the server from `DEEPGRAM_API_KEY`; it is never sent to the browser, put in the bundle, or logged. The voice functions use the same `APP_PASSWORD` protection as the chat functions.
 
 ## Design option previews
 
@@ -36,7 +59,8 @@ Static design previews by Sable (the UI designer) live in `public/options/` and 
 
 | Variable | Default | What it does |
 |---|---|---|
-| `APP_PASSWORD` | not set | Requires this password for every API call |
+| `DEEPGRAM_API_KEY` | not set | Turns on voice (talk to experts and hear answers). Server-side only |
+| `APP_PASSWORD` | not set | Requires this password for every API call, voice included |
 | `MODEL_OPUS` / `MODEL_SONNET` / `MODEL_HAIKU` | `claude-opus-5-5` / `claude-sonnet-5-5` / `claude-haiku-5-5` | Which model ID each tier uses |
 | `EFFORT_OPUS` / `EFFORT_SONNET` / `EFFORT_HAIKU` | `medium` / `low` / `low` | Thinking depth per tier (`low`, `medium`, `high`, `xhigh`, `max`). Higher is slower and costs more |
 

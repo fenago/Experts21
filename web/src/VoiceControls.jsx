@@ -24,7 +24,7 @@ const PlayIcon = () => <Icon><path d="M5 5a2 2 0 0 1 3.008-1.728l11.997 6.998a2 
 const NOT_SET_UP = "Voice isn't set up yet. You can keep typing your questions.";
 
 // ---------- microphone: press to talk, press again (or pause) to send ----------
-export function MicButton({ onTranscript, disabled, persona, onMessage }) {
+export function MicButton({ onTranscript, disabled, persona, onMessage, onAuth }) {
   const status = useVoiceStatus();
   const [state, setState] = useState("idle"); // idle | starting | recording | transcribing
   const rec = useRef(null);
@@ -32,13 +32,14 @@ export function MicButton({ onTranscript, disabled, persona, onMessage }) {
 
   useEffect(() => () => { rec.current?.stop(); aborter.current?.abort(); }, []);
 
-  async function finish() {
+  // auto = stopped by silence/timeout. A manual stop always sends the audio; Deepgram decides if there was speech.
+  async function finish(auto = false) {
     const r = rec.current;
     if (!r) return;
     rec.current = null;
     r.stop();
     const { blob, heardSpeech } = await r.done;
-    if (!heardSpeech || blob.size < 1000) {
+    if ((auto && !heardSpeech) || blob.size < 1000) {
       setState("idle");
       return onMessage("I didn't hear anything. Press the mic and start talking, or type your question.", true);
     }
@@ -50,6 +51,7 @@ export function MicButton({ onTranscript, disabled, persona, onMessage }) {
       onMessage("");
       onTranscript(text);
     } catch (err) {
+      if (err.code === "password_required") onAuth?.();
       if (err.name !== "AbortError") onMessage(err.code === "voice_not_configured" ? NOT_SET_UP : err.message, true);
     } finally {
       setState("idle");
@@ -64,7 +66,7 @@ export function MicButton({ onTranscript, disabled, persona, onMessage }) {
     stopSpeaking();
     setState("starting");
     try {
-      rec.current = await startRecording({ onAutoStop: () => finish() });
+      rec.current = await startRecording({ onAutoStop: () => finish(true) });
       setState("recording");
       onMessage(`Listening… Ask ${persona} your question. Press the mic again, or pause, to send.`);
     } catch (err) {

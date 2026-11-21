@@ -52,6 +52,7 @@ export function setVoiceFor(agent, voiceId) {
   save(VOICE_KEY, voices);
   emitPrefs();
 }
+export const autoReadEnabled = () => prefs.autoRead;
 export function setAutoRead(on) {
   prefs = { ...prefs, autoRead: on };
   save(AUTO_KEY, on);

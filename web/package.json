@@ -9,7 +9,7 @@
     "dev": "npm run team && vite",
     "build": "npm run team && vite build",
     "preview": "vite preview",
-    "test": "npm run build && node scripts/test-functions.mjs"
+    "test": "npm run build && node scripts/test-functions.mjs && node scripts/test-voice.mjs"
   },
   "engines": {
     "node": ">=20.19"

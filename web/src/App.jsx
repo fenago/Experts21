@@ -3,6 +3,8 @@ import ReactMarkdown from "react-markdown";
 import remarkGfm from "remark-gfm";
 import TEAM from "./generated/team.json";
 import { streamNdjson, postJson, setPassword, ApiError } from "./api.js";
+import { MicButton, SpeakButton, VoiceBar, VoicePicker } from "./VoiceControls.jsx";
+import { checkVoiceStatus, speak, voiceFor, autoReadEnabled } from "./voice.js";
 
 const BY_NAME = Object.fromEntries(TEAM.map((a) => [a.name, a]));
 const ORCH = BY_NAME.orchestrator;
@@ -96,20 +98,23 @@ function AgentHeader({ agent, team }) {
           </p>
         ) : (
           <>
-            <p><b>Voice:</b> {agent.voice}</p>
+            <p><b>Personality:</b> {agent.voice}</p>
             <p><b>Working style:</b> {agent.style}</p>
             <p className="muted">
               Knowledge folder: {agent.knowledge.filter((k) => k !== "README.md").join(", ") || "no documents yet"}
             </p>
           </>
         )}
+        <VoicePicker agent={agent} />
+        <VoiceBar />
       </div>
     </header>
   );
 }
 
-function Composer({ onSend, busy, onStop, placeholder }) {
+function Composer({ onSend, busy, onStop, placeholder, persona, onAuth }) {
   const [text, setText] = useState("");
+  const [voiceMsg, setVoiceMsg] = useState({ text: "", error: false });
   const send = () => {
     const t = text.trim();
     if (!t || busy) return;
@@ -117,7 +122,15 @@ function Composer({ onSend, busy, onStop, placeholder }) {
     setText("");
   };
   return (
+    <>
     <form className="composer" onSubmit={(e) => (e.preventDefault(), send())}>
+      <MicButton
+        persona={persona}
+        disabled={busy}
+        onAuth={onAuth}
+        onMessage={(t, error = false) => setVoiceMsg({ text: t, error })}
+        onTranscript={(t) => onSend(t)}
+      />
       <textarea
         value={text}
         onChange={(e) => setText(e.target.value)}
@@ -137,6 +150,8 @@ function Composer({ onSend, busy, onStop, placeholder }) {
         <button type="submit" disabled={!text.trim()}>Send</button>
       )}
     </form>
+    <p className={`voice-status ${voiceMsg.error ? "is-error" : ""}`} role="status" aria-live="polite">{voiceMsg.text}</p>
+    </>
   );
 }
 
@@ -185,6 +200,7 @@ function ExpertChat({ agent, messages, setMessages, onAuth }) {
       );
       const note = done.stop_reason === "max_tokens" ? "\n\n*(Answer reached the length limit.)*" : "";
       setMessages([...history, { role: "assistant", content: answer + note }]);
+      if (autoReadEnabled()) speak(`${agent.name}-${history.length}`, answer, voiceFor(agent.name));
     } catch (err) {
       if (err instanceof ApiError && err.code === "password_required") onAuth();
       if (err.name !== "AbortError") setError(err.message);
@@ -208,12 +224,13 @@ function ExpertChat({ agent, messages, setMessages, onAuth }) {
             {m.role === "assistant" && <Avatar agent={agent} size={28} />}
             <div className="bubble">
               {m.role === "assistant" ? (m.content ? <Markdown text={m.content} /> : <span className="thinking">{agent.persona} is thinking…</span>) : <p>{m.content}</p>}
+              {m.role === "assistant" && !m.pending && <SpeakButton id={`${agent.name}-${i}`} text={m.content} agent={agent.name} persona={agent.persona} />}
             </div>
           </div>
         ))}
         {error && <div className="error">{error}</div>}
       </div>
-      <Composer onSend={ask} busy={busy} onStop={() => abort.current?.abort()} placeholder={`Ask ${agent.persona}…  (Enter to send, Shift+Enter for a new line)`} />
+      <Composer onSend={ask} busy={busy} onStop={() => abort.current?.abort()} persona={agent.persona} onAuth={onAuth} placeholder={`Ask ${agent.persona}…  (Enter to send, Shift+Enter for a new line)`} />
     </>
   );
 }
@@ -241,6 +258,7 @@ function TeamRun({ run }) {
           </summary>
           {e.brief && <p className="brief"><b>Brief:</b> {e.brief}</p>}
           {e.text ? <Markdown text={e.text} /> : e.status === "working" && <span className="thinking">thinking…</span>}
+          {e.status === "done" && <SpeakButton id={`run-${run.id}-${e.agent}`} text={e.text} agent={e.agent} persona={BY_NAME[e.agent].persona} />}
           {e.error && <div className="error">{e.error}</div>}
         </details>
       ))}
@@ -250,6 +268,7 @@ function TeamRun({ run }) {
             <Avatar agent={ORCH} size={28} /> <b>Combined answer from {ORCH.persona}</b>
           </div>
           {run.final ? <Markdown text={run.final} /> : <span className="thinking">{ORCH.persona} is combining the answers…</span>}
+          {run.final && !run.stage && !run.streaming && <SpeakButton id={`run-${run.id}-final`} text={run.final} agent="orchestrator" persona={ORCH.persona} />}
         </div>
       )}
       {run.stage && <div className="stage">{run.stage}</div>}
@@ -323,16 +342,17 @@ function TeamChat({ runs, setRuns, onAuth }) {
       }
 
       // 4. Elena combines everything.
-      update({ final: "", stage: "" });
+      update({ final: "", stage: "", streaming: true });
       let final = "";
       await streamNdjson("/api/synthesize", { question, plan: route.plan, answers, redTeam }, (t) => {
         final += t;
         update({ final });
       }, signal);
-      update({ stage: "" });
+      update({ stage: "", streaming: false });
+      if (autoReadEnabled()) speak(`run-${id}-final`, final, voiceFor("orchestrator"));
     } catch (err) {
       if (err instanceof ApiError && err.code === "password_required") onAuth();
-      update({ stage: "", error: err.name === "AbortError" ? "Stopped." : err.message });
+      update({ stage: "", streaming: false, error: err.name === "AbortError" ? "Stopped." : err.message });
     } finally {
       setBusy(false);
     }
@@ -352,7 +372,7 @@ function TeamChat({ runs, setRuns, onAuth }) {
           <TeamRun key={r.id} run={r} />
         ))}
       </div>
-      <Composer onSend={ask} busy={busy} onStop={() => abort.current?.abort()} placeholder="Ask the whole team…  (Enter to send, Shift+Enter for a new line)" />
+      <Composer onSend={ask} busy={busy} onStop={() => abort.current?.abort()} persona="the team" onAuth={onAuth} placeholder="Ask the whole team…  (Enter to send, Shift+Enter for a new line)" />
     </>
   );
 }
@@ -366,6 +386,7 @@ export default function App() {
   const agent = selected === TEAM_ID ? ORCH : BY_NAME[selected];
   const messages = conversations[selected] || [];
   const setMessages = useMemo(() => (m) => setConversations((c) => ({ ...c, [selected]: m })), [selected]);
+  useEffect(() => { checkVoiceStatus(); }, []);
 
   return (
     <div className="app">
@@ -373,7 +394,7 @@ export default function App() {
       <Sidebar selected={selected} onSelect={(s) => (setSelected(s), setMenuOpen(false))} open={menuOpen} />
       <main className="chat">
         <AgentHeader agent={agent} team={selected === TEAM_ID} />
-        {needPassword && <PasswordPrompt onDone={() => setNeedPassword(false)} />}
+        {needPassword && <PasswordPrompt onDone={() => (setNeedPassword(false), checkVoiceStatus())} />}
         {selected === TEAM_ID ? (
           <TeamChat runs={runs} setRuns={setRuns} onAuth={() => setNeedPassword(true)} />
         ) : (

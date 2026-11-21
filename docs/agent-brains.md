@@ -45,6 +45,41 @@ The aliases select the current version of each model family. Opus costs the most
 | `ui-designer-apple-liquid-glass` | **Sable** | sonnet | Specialist craft work: visual design follows explicit recipes (glass, type, color tokens) and is verified by an automated accessibility audit, so Sonnet's speed fits iterative building. | Calm, precise, and visual; talks in materials, layers, and contrast ratios, and shows rather than tells. | Studies the reference examples first, builds real working HTML/CSS with the real content, then checks every surface in light, dark, increased contrast, and reduced transparency before showing anything. |
 | `ux-designer-apple-hig` | **Wren** | opus | Deep judgment: ranking usability problems, weighing trade-offs in flows, and spotting what's missing need careful reasoning about people, not just rules. | Warm, plain-spoken, and user-first; asks "what is the person trying to do right now?" and never hides a problem behind jargon. | Walks real tasks step by step, ranks problems by severity with evidence, and always pairs a problem with a specific, buildable fix and the exact words to use. |
 
+## Speaking voices (web app)
+
+In the web app, each expert reads answers aloud with a Deepgram Aura-2 English voice chosen to fit its personality. People can pick another voice per expert in the expert's card (remembered in their browser). Defaults live in `web/shared/voices.mjs`.
+
+| Agent | Default voice | Deepgram's description | Why |
+|---|---|---|---|
+| `orchestrator` | Athena (`aura-2-athena-en`) | Calm, Smooth, Professional | Elena: calm, composed conductor |
+| `engagement-lead` | Orion (`aura-2-orion-en`) | Approachable, Comfortable, Calm, Polite | Marcus: steady, approachable, calm |
+| `coffee-business-strategist` | Electra (`aura-2-electra-en`) | Professional, Engaging, Knowledgeable | Isabel: crisp, knowledgeable |
+| `market-research-analyst` | Selene (`aura-2-selene-en`) | Expressive, Engaging, Energetic | Priya: curious, engaging |
+| `latin-market-advisor` | Vesta (`aura-2-vesta-en`) | Natural, Expressive, Patient, Empathetic | Lourdes: warm, patient, expressive |
+| `competitive-intel-analyst` | Hermes (`aura-2-hermes-en`) | Expressive, Engaging, Professional | Dante: quick, sharp |
+| `real-estate-advisor` | Saturn (`aura-2-saturn-en`) | Knowledgeable, Confident, Baritone | Victor: confident, deal-savvy |
+| `buildout-design-advisor` | Arcas (`aura-2-arcas-en`) | Natural, Smooth, Clear, Comfortable | Tomás: practical, plain-spoken |
+| `permitting-specialist` | Callista (`aura-2-callista-en`) | Clear, Energetic, Professional, Smooth | Gloria: precise, clear |
+| `food-safety-specialist` | Asteria (`aura-2-asteria-en`) | Clear, Confident, Knowledgeable, Energetic | Nadia: firm, clear, confident |
+| `business-attorney` | Hera (`aura-2-hera-en`) | Smooth, Warm, Professional | Eleanor: careful, measured, professional |
+| `financial-modeling-analyst` | Neptune (`aura-2-neptune-en`) | Professional, Patient, Polite | Daniel: patient, shows the math |
+| `funding-advisor` | Harmonia (`aura-2-harmonia-en`) | Empathetic, Clear, Calm, Confident | Grace: reassuring, calm, confident |
+| `accounting-tax-advisor` | Mars (`aura-2-mars-en`) | Smooth, Patient, Trustworthy, Baritone | Walter: meticulous, patient |
+| `insurance-risk-manager` | Pluto (`aura-2-pluto-en`) | Smooth, Calm, Empathetic, Baritone | Andrés: calm, prepared |
+| `head-of-coffee` | Aries (`aura-2-aries-en`) | Warm, Energetic, Caring | Mateo: warm, passionate |
+| `menu-beverage-developer` | Ophelia (`aura-2-ophelia-en`) | Expressive, Enthusiastic, Cheerful | Camila: playful, enthusiastic |
+| `operations-manager` | Phoebe (`aura-2-phoebe-en`) | Energetic, Warm, Casual | Rosa: brisk, energetic |
+| `hr-talent-advisor` | Cordelia (`aura-2-cordelia-en`) | Approachable, Warm, Polite | Jasmine: warm, encouraging |
+| `equipment-specialist` | Orpheus (`aura-2-orpheus-en`) | Professional, Clear, Confident, Trustworthy | Kenji: clear, reliable |
+| `restaurant-tech-specialist` | Apollo (`aura-2-apollo-en`) | Confident, Comfortable, Casual | Leo: pragmatic, casual |
+| `brand-creative-director` | Aurora (`aura-2-aurora-en`) | Cheerful, Expressive, Energetic | Sofía: bold, expressive |
+| `digital-marketer` | Iris (`aura-2-iris-en`) | Cheerful, Positive, Approachable | Zoe: upbeat, positive |
+| `community-pr-manager` | Atlas (`aura-2-atlas-en`) | Enthusiastic, Confident, Approachable, Friendly | Theo: friendly connector |
+| `red-team-reviewer` | Zeus (`aura-2-zeus-en`) | Deep, Trustworthy, Smooth | Frank: deep, direct skeptic |
+| `agent-builder` | Theia (`aura-2-theia-en`) | Expressive, Polite, Sincere | Ada: methodical, sincere |
+| `ui-designer-apple-liquid-glass` | Pandora (`aura-2-pandora-en`) | Smooth, Calm, Melodic, Breathy | Sable: calm, precise, melodic |
+| `ux-designer-apple-hig` | Helena (`aura-2-helena-en`) | Caring, Natural, Positive, Friendly, Raspy | Wren: warm, plain-spoken |
+
 ## Changing a brain
 
 - **One agent:** edit the `model:` line in `.claude/agents/<agent-name>.md` (`opus`, `sonnet`, `haiku`, a full model ID, or `inherit`). Then update this table.
